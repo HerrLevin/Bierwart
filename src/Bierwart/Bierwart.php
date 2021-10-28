@@ -4,6 +4,6 @@ namespace Bierwart;
 
 class Bierwart {
 	public function printHelloWorld() {
-		return "Bier Bier Bier Bier!";
+		return ["data" => "Bier Bier Bier Bier!"];
 	}
 }
