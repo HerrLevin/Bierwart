@@ -3,7 +3,9 @@
 // Autoload files using the Composer autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
 
+use App\Core\AccountController;
 use App\Core\Bierwart;
+use App\Core\UserController;
 use App\Scaffolding\Router;
 
 
@@ -11,5 +13,7 @@ $request = $_SERVER['REQUEST_URI'];
 $router = new Router($request);
 
 $router->get('/', Bierwart::class, 'printHelloWorld');
+$router->get('/useroverview', UserController::class, 'getUserOverview');
+$router->get('/accountbalances', AccountController::class, 'getBalances');
 
 Router::abort();

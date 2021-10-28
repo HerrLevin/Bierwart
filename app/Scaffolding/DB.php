@@ -38,4 +38,8 @@ class DB
     {
         return $this->pdostatement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function execute(): bool {
+        return $this->pdostatement->execute();
+    }
 }

@@ -27,18 +27,18 @@ CREATE TABLE account (
 
 DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `user` (
-                        `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                        `name` VARCHAR(255) NOT NULL,
-                        `mail` VARCHAR(255) NULL DEFAULT NULL,
-                        `id_role` INTEGER NOT NULL DEFAULT NULL,
-                        `admin` bit NOT NULL DEFAULT 0,
-                        `id_owner` INTEGER DEFAULT NULL,
-                        `updated_at` TIMESTAMP NULL DEFAULT NULL,
-                        `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        FOREIGN KEY (id_role) REFERENCES `role` (`id`),
-                        FOREIGN KEY (id_owner) REFERENCES `user` (`id`)
-
+CREATE TABLE "user" (
+                        "id"	INTEGER NOT NULL,
+                        "name"	VARCHAR(255) NOT NULL,
+                        "mail"	VARCHAR(255) DEFAULT NULL,
+                        "id_role"	INTEGER NOT NULL DEFAULT NULL,
+                        "admin"	bit NOT NULL DEFAULT 0,
+                        "id_account"	INTEGER DEFAULT NULL,
+                        "updated_at"	TIMESTAMP DEFAULT NULL,
+                        "created_at"	TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY("id_account") REFERENCES "account"("id"),
+                        FOREIGN KEY("id_role") REFERENCES "role"("id"),
+                        PRIMARY KEY("id" AUTOINCREMENT)
 );
 
 -- ---
