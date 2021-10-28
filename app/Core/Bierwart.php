@@ -1,9 +1,9 @@
 <?php
 
-namespace Bierwart;
+namespace App\Core;
 
 class Bierwart {
 	public function printHelloWorld() {
-		return ["data" => "Bier Bier Bier Bier!"];
+		return "Bier Bier Bier Bier!";
 	}
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace Bierwart;
+namespace App\Scaffolding;
 
 
+use JetBrains\PhpStorm\NoReturn;
 use JsonException;
 
 class Router
@@ -20,7 +21,7 @@ class Router
      * @param int $code
      * @param string|null $message
      */
-    public static function abort(int $code = 404, string $message = null): void
+    #[NoReturn] public static function abort(int $code = 404, string $message = null): void
     {
         header('Content-Type: application/json');
         if ($code === 404 && !$message) {
@@ -49,7 +50,7 @@ class Router
 
             $class = new $file();
             try {
-                echo json_encode($class->$method($args), JSON_THROW_ON_ERROR);
+                echo json_encode(["data" => $class->$method($args)], JSON_THROW_ON_ERROR);
                 exit();
             } catch (JsonException $e) {
                 http_response_code(500);
