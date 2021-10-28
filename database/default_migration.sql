@@ -33,9 +33,9 @@ CREATE TABLE `user` (
                         `mail` VARCHAR(255) NULL DEFAULT NULL,
                         `id_role` INTEGER NOT NULL DEFAULT NULL,
                         `admin` bit NOT NULL DEFAULT 0,
-                        `id_owner` INTEGER NOT NULL,
+                        `id_owner` INTEGER DEFAULT NULL,
                         `updated_at` TIMESTAMP NULL DEFAULT NULL,
-                        `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                        `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         FOREIGN KEY (id_role) REFERENCES `role` (`id`),
                         FOREIGN KEY (id_owner) REFERENCES `user` (`id`)
 
@@ -55,7 +55,7 @@ CREATE TABLE `account_movement` (
                                     `is_deposit` bit NOT NULL DEFAULT 1,
                                     `comment` VARCHAR(255) NULL DEFAULT NULL,
                                     `updated_at` TIMESTAMP NULL DEFAULT NULL,
-                                    `created_at` TIMESTAMP NOT NULL DEFAULT 'NULL',
+                                    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                     FOREIGN KEY (id_account) REFERENCES `account` (`id`)
 );
 
