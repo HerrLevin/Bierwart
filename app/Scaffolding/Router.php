@@ -27,7 +27,7 @@ class Router
      * @param string $file
      * @param string $method
      */
-    public function get(string $route, string $file, $method): void
+    public function get(string $route, string $file, string $method): void
     {
         $this->route = $route;
         $this->file = $file;
@@ -36,7 +36,7 @@ class Router
         $this->scaffoldRequest();
     }
 
-    protected function scaffoldRequest()
+    protected function scaffoldRequest(): void
     {
         try {
             $args = $this->matchURI(route: $this->route, method: $this->httpMethod);
