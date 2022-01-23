@@ -14,4 +14,10 @@ class Response
         http_response_code($status);
         exit();
     }
+
+    public static function error($message="Resource not found", $status=404) {
+        http_response_code($status);
+        echo json_encode(["error" => ["message" => $message, "status" => $status]], JSON_PARTIAL_OUTPUT_ON_ERROR);
+        exit();
+    }
 }

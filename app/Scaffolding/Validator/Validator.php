@@ -12,10 +12,15 @@ class Validator
         $this->data = $data;
     }
 
+    /**
+     * @throws \App\Exceptions\ValidationException
+     * @throws \App\Exceptions\NotFoundException
+     */
     public function validate(): void
     {
         foreach ($this->rulesArray as $key => $ruleset) {
-            new Validatable($key, $this->getValidatableContent($key), $ruleset);
+            $validatable = new Validatable($key, $this->getValidatableContent($key), $ruleset);
+            $validatable->validateRules();
         }
     }
 

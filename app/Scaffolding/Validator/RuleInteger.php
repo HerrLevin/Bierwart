@@ -16,6 +16,6 @@ class RuleInteger implements Validation
             return true;
         }
 
-        throw new ValidationException("numeric", $key, $value);
+        throw new ValidationException("integer", $key, $value);
     }
 }

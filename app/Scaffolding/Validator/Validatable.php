@@ -3,6 +3,7 @@
 namespace App\Scaffolding\Validator;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
 
 class Validatable
 {
@@ -19,7 +20,6 @@ class Validatable
         $this->ruleset = $this->getRules($ruleset);
         $this->key = $key;
         $this->value = $value;
-        $this->validateRules();
     }
 
     private function getRules($ruleset): array
@@ -27,14 +27,16 @@ class Validatable
         return explode("|", $ruleset);
     }
 
-    private function validateRules(): void
+    /**
+     * @throws NotFoundException
+     * @throws ValidationException
+     */
+    public function validateRules(): void
     {
         foreach ($this->ruleset as $rule) {
-
-            $classname = $this->getRule($rule);
-
-            $class = new $classname();
-            $class->validate($this->key, $this->value);
+                $classname = $this->getRule($rule);
+                $class = new $classname();
+                $class->validate($this->key, $this->value);
         }
     }
 

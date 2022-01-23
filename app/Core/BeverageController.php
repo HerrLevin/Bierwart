@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Exceptions\ValidationException;
 use App\Scaffolding\DB;
 use App\Scaffolding\Request;
 use App\Scaffolding\Response;
@@ -17,6 +18,16 @@ class BeverageController
     public static function createBeverageMovement($args): void
     {
         $request = new Request();
+        try {
+            $request->validate(rules: [
+                'uid' => 'required|integer',
+                'bid' => 'required|integer',
+                'qty' => 'required|integer'
+            ]);
+        } catch (ValidationException $exception) {
+            Response::error(message: $exception->getMessage(), status: 400);
+        }
+
         $db = new DB();
         $db->query("
             INSERT INTO 

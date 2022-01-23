@@ -3,6 +3,7 @@
 namespace App\Scaffolding;
 
 use App\Exceptions\NotFoundException;
+use App\Scaffolding\Validator\Validator;
 
 class Request
 {
@@ -40,17 +41,13 @@ class Request
         return $this->jsonBody;
     }
 
-    public function validate(array $rules) {
-
-
-
-//        foreach ($rules as $field => $rule) {
-//            try {
-//                $this->bodyParam(name: $field);
-//            } catch (NotFoundException) {
-//
-//            }
-//            die();
-//        }
+    /**
+     * @throws \App\Exceptions\ValidationException
+     * @throws NotFoundException
+     */
+    public function validate(array $rules): void
+    {
+        $validator = new Validator($rules, $this->getJsonBody());
+        $validator->validate();
     }
 }
