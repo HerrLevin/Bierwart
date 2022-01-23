@@ -39,9 +39,10 @@ class Router
     protected function scaffoldRequest(): void
     {
         try {
+            http_response_code(200);
             $args = $this->matchURI(route: $this->route, method: $this->httpMethod);
             $class = new $this->file();
-            echo json_encode(["data" => $class->{$this->method}($args)], JSON_THROW_ON_ERROR);
+            $class->{$this->method}($args);
             exit();
         } catch (JsonException $e) {
             http_response_code(500);
