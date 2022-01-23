@@ -27,7 +27,7 @@ class Router
      * @param string $file
      * @param string $method
      */
-    public function get(string $route, string $file, string $method): void
+    public function get(string $route, string $file, $method): void
     {
         $this->route = $route;
         $this->file = $file;
@@ -41,7 +41,7 @@ class Router
         try {
             $args = $this->matchURI(route: $this->route, method: $this->httpMethod);
             $class = new $this->file();
-            echo json_encode(["data" => $class->$this->method($args)], JSON_THROW_ON_ERROR);
+            echo json_encode(["data" => $class->{$this->method}($args)], JSON_THROW_ON_ERROR);
             exit();
         } catch (JsonException $e) {
             http_response_code(500);
