@@ -10,6 +10,7 @@ class Request
 
     private null|string $body;
     private null|array $jsonBody;
+    public array $validated;
 
     public function __construct() {
         $this->body = file_get_contents(filename: 'php://input');
@@ -49,5 +50,6 @@ class Request
     {
         $validator = new Validator($rules, $this->getJsonBody());
         $validator->validate();
+        $this->validated = array_intersect_key($this->getJsonBody(), array_flip(array_keys($rules)));
     }
 }
