@@ -44,7 +44,7 @@ class BeverageController
             $request->validate(rules: [
                 'id_drink_type' => 'required|integer',
                 'name' => 'required',
-                'size' => 'required|integer',
+                'size' => 'numeric',
                 'calories' => 'numeric',
                 'alcohol' => 'numeric'
             ]);

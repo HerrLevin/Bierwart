@@ -12,7 +12,7 @@ class RuleRequired implements Validation
      */
     public function validate($key, $value)
     {
-        if (isset($key, $value) && $value !== "") {
+        if (isset($key, $value) && !empty($value)) {
             return true;
         }
 

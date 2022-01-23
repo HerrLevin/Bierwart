@@ -12,7 +12,7 @@ class RuleNumeric implements Validation
      */
     public function validate($key, $value)
     {
-        if (is_numeric($value)) {
+        if (is_numeric($value) || empty($value)) {
             return true;
         }
 

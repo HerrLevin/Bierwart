@@ -12,7 +12,7 @@ class RuleInteger implements Validation
      */
     public function validate($key, $value)
     {
-        if (is_int($value)) {
+        if (is_int($value) || empty($value)) {
             return true;
         }
 

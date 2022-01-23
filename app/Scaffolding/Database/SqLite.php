@@ -49,8 +49,7 @@ class SqLite implements QueryBuilder
             "db_values" => $this->values
         ];
         $query = strtr("INSERT INTO db_table (db_keys) VALUES (db_values);", $replacements);
-        var_dump($query);
-        die();
+
         return $this->pdo->exec($query);
     }
 
@@ -79,6 +78,7 @@ class SqLite implements QueryBuilder
 
     private function decodeInsertData(array $data) {
         ksort($data);
+        array_walk($data, fn(&$x) => $x = "'$x'");
         $this->keys = implode(",", array_keys($data));
         $this->values = implode(",", array_values($data));
         return $this;
