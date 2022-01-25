@@ -55,7 +55,7 @@ class SqLite implements QueryBuilder
 
     public function select(array $columns = ['*']): static
     {
-        $this->decodeInsertData($columns);
+        $this->decodeData($columns);
 
         $replacements = ['db_columns' => $this->values, 'db_table' => $this->table];
 
@@ -76,10 +76,31 @@ class SqLite implements QueryBuilder
         return $this;
     }
 
-    private function decodeInsertData(array $data) {
+    public function groupBy(string $group): static
+    {
+        $this->query .= strtr(" GROUP BY db_group ", ['db_group' => $group]);
+        return $this;
+    }
+
+    public function as(string $alias): static {
+        $this->query = strtr("(db_query) AS db_alias ", ['db_query'=>$this->query, 'db_alias' => $alias]);
+        return $this;
+    }
+
+    public function query(): string {
+        return $this->query;
+    }
+
+    private function decodeData(array $data) {
         ksort($data);
-        array_walk($data, fn(&$x) => $x = "'$x'");
         $this->keys = implode(",", array_keys($data));
+        $this->values = implode(",", array_values($data));
+        return $this;
+    }
+
+    private function decodeInsertData(array $data) {
+        $this->decodeData(data: $data);
+        array_walk($data, fn(&$x) => $x = "'$x'");
         $this->values = implode(",", array_values($data));
         return $this;
     }
