@@ -92,7 +92,6 @@ class SqLite implements QueryBuilder
     }
 
     private function decodeData(array $data) {
-        ksort($data);
         $this->keys = implode(",", array_keys($data));
         $this->values = implode(",", array_values($data));
         return $this;

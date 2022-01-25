@@ -52,22 +52,10 @@ class BeverageController
             Response::error(message: $exception->getMessage(), status: 400);
         }
 
-
-        var_dump($request->validated);
-
         $response = DB::table("beverage")->insert($request->validated);
         if ($response > 0) {
             Response::status(201);
         }
         Response::status(404);
-
-//        $db->query("
-//            INSERT INTO beverage
-//                (id_drink_type,name,\"size\",calories,alcohol)
-//            VALUES
-//                (1,'Mate',500,20,0);
-//        ");
-//        $db->execute();
-        Response::status(201);
     }
 }
