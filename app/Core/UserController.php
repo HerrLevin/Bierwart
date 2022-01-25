@@ -2,13 +2,16 @@
 
 namespace App\Core;
 
-use App\Scaffolding\DB;
+use App\Scaffolding\Database\DB;
+use App\Scaffolding\Response;
 
 class UserController
 {
     public static function getUserOverview() {
-        $db = new DB();
-        $db->query("SELECT user.id, user.name, r.name as role FROM user INNER JOIN role r ON user.id_role = r.id");
-        return $db->get();
+        $result = DB::table("user")
+            ->select(['user.id', 'user.name', 'r.name as role'])
+            ->innerJoin('role r', 'user.id_role', '=', 'r.id')
+            ->get();
+        Response::json(data: $result);
     }
 }
