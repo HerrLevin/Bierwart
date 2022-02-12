@@ -8,6 +8,9 @@ use PDO;
 use PDOException;
 use PDOStatement;
 
+/**
+ * @todo replace strtr with $this->pdo->prepare
+ */
 class SqLite implements QueryBuilder
 {
 
@@ -15,7 +18,7 @@ class SqLite implements QueryBuilder
     private $query;
     private $keys;
     private $values;
-    private null|PDO $pdo;
+    public null|PDO $pdo;
     private bool|PDOStatement $pdostatement;
 
     /**
@@ -33,13 +36,29 @@ class SqLite implements QueryBuilder
         $this->pdo = null;
     }
 
+    public function beginTransaction()
+    {
+        $this->pdo->beginTransaction();
+        return $this;
+    }
+
+    public function commitTransaction() {
+        $this->pdo->commit();
+        return $this;
+    }
+
+    public function rollbackTransaction() {
+        $this->pdo->rollBack();
+        return $this;
+    }
+
     public function table($name): static
     {
         $this->table = $name;
         return $this;
     }
 
-    public function insert(array $data): bool|int
+    public function insert(array $data)
     {
         $this->decodeInsertData($data);
 
@@ -50,7 +69,9 @@ class SqLite implements QueryBuilder
         ];
         $query = strtr("INSERT INTO db_table (db_keys) VALUES (db_values);", $replacements);
 
-        return $this->pdo->exec($query);
+        $this->pdo->exec($query);
+
+        return $this;
     }
 
     public function select(array $columns = ['*']): static

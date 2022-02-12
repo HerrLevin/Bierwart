@@ -31,6 +31,18 @@ class Request
     }
 
     /**
+     * Check if Post-Request body param is set
+     * @param string $name
+     * @return bool
+     */
+    public function issetBody(string $name): bool {
+        if (isset($this->jsonBody[$name])) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * returns unencoded body
      * @return string|null
      */

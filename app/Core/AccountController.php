@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
+use App\Exceptions\ValidationException;
 use App\Scaffolding\Database\DB;
+use App\Scaffolding\Request;
 use App\Scaffolding\Response;
 
 class AccountController
@@ -31,5 +33,54 @@ class AccountController
             ->groupBy(group: 'user.id_account')
             ->get();
         Response::json(data: $result);
+    }
+    public static function createAccount() {
+        $request = new Request();
+        try {
+            $request->validate(rules: [
+                'owner' => 'required|integer|notnegative',
+                'deposit' => 'integer'
+            ]);
+        } catch (ValidationException $exception) {
+            Response::error(message: $exception->getMessage(), status: 400);
+        }
+
+        $amount = 0;
+        if ($request->issetBody(name: "deposit")) {
+            $amount = $request->bodyParam(name: "deposit");
+        }
+
+        $db = DB::beginTransaction();
+        try {
+            $db->table("account")
+                ->insert(['id_owner' => $request->bodyParam(name: "owner")]);
+            $db->table("account_movement")
+                ->insert(['id_account' => $db->pdo->lastInsertId(), 'amount' => $amount]);
+            $db->commitTransaction();
+        } catch (\Exception) {
+            $db->rollbackTransaction();
+            Response::status(500);
+        }
+
+        Response::status(201);
+    }
+
+
+    public static function createAccountMovement() {
+        $request = new Request();
+        try {
+            $request->validate(rules: [
+                'id_account' => 'required|integer|notnegative',
+                'amount' => 'required|integer'
+            ]);
+        } catch (ValidationException $exception) {
+            Response::error(message: $exception->getMessage(), status: 400);
+        }
+            $db = DB::table("account_movement")->insert($request->validated);
+
+        if ($db->pdo->lastInsertId() > 0) {
+            Response::status(201);
+        }
+        Response::status(404);
     }
 }

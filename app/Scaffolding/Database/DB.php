@@ -10,4 +10,10 @@ class DB
         $sqlite->table(name: $name);
         return $sqlite;
     }
+
+    public static function beginTransaction() {
+        $sqlite = new SqLite();
+        $sqlite->beginTransaction();
+        return $sqlite;
+    }
 }

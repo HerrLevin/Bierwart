@@ -40,7 +40,7 @@ class BeverageController
         }
 
         $response = DB::table("beverage_movement")->insert($request->validated);
-        if ($response > 0) {
+        if ($response->pdo->lastInsertId() > 0) {
             Response::status(201);
         }
         Response::status(404);
@@ -51,7 +51,7 @@ class BeverageController
      * @todo validate if user is
      * @throws \App\Exceptions\NotFoundException
      */
-    public static function createBeverage(): void {
+    private static function createBeverage(): void {
         $request = new Request();
         try {
             $request->validate(rules: [
@@ -66,7 +66,7 @@ class BeverageController
         }
 
         $response = DB::table("beverage")->insert($request->validated);
-        if ($response > 0) {
+        if ($response->pdo->lastInsertId() > 0) {
             Response::status(201);
         }
         Response::status(404);
@@ -89,7 +89,7 @@ class BeverageController
         }
 
         $response = DB::table("drink_type")->insert($request->validated);
-        if ($response > 0) {
+        if ($response->pdo->lastInsertId() > 0) {
             Response::status(201);
         }
         Response::status(404);

@@ -4,7 +4,9 @@
 ## 
 
 
- - Benutzer entnimmt Getränk
+ - ~~Benutzer entnimmt Getränk~~
+ - ~~Getränk wird angelegt~~
+ - ~~Getränketyp wird angelegt~~
  - Benutzer lädt Guthaben auf
  - Benutzer erhält Strafe
  - Lieferung geht ein
