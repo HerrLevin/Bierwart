@@ -76,7 +76,9 @@ class AccountController
         try {
             $request->validate(rules: [
                 'id_account' => 'required|integer|notnegative',
-                'amount' => 'required|integer'
+                'amount' => 'required|integer',
+                'is_deposit' => 'bool',
+                'comment' => 'nullable'
             ]);
         } catch (ValidationException $exception) {
             Response::error(message: $exception->getMessage(), status: 400);
