@@ -51,6 +51,30 @@ class AccountController
     }
 
 
+    public static function parseDrinksForAccounts($endTimestamp = "tomorrow", $beginTimestamp = "year 0") {
+        $endDate = date(format: "Y-m-d", timestamp: strtotime($endTimestamp));
+        $beginDate = date(format: "Y-m-d", timestamp: strtotime($beginTimestamp));
+
+        return DB::table(name: 'user')
+            ->select(['user.id_account', 'user.id as user', 'dt.name' , 'bm.quantity', 'SUM(bm.quantity * dt.price) as price'])
+            ->innerJoin(
+                table: DB::table(name: 'beverage_movement bm')
+                    ->select(['id_user', 'id_beverage', 'SUM(quantity) as quantity'])
+                    ->where(first:'DATE(created_at)', operator: '<', second: "'$endDate'")
+                    ->andWhere(first:'DATE(created_at)', operator: '>', second: "'$beginDate'")
+                    ->groupBy(group: 'id_beverage, id_user')
+                    ->as(alias: 'bm')
+                    ->query(),
+                first: 'user.id',
+                operator: '=',
+                second: 'bm.id_user')
+            ->innerJoin(table: 'beverage', first: 'bm.id_beverage', operator: '=', second: 'beverage.id')
+            ->innerJoin(table: 'drink_type dt', first: 'beverage.id_drink_type', operator: '=', second: 'dt.id')
+            ->groupBy(group: 'user.id, dt.name')
+            ->get();
+    }
+
+
     public static function createAccount() {
         $request = new Request();
         try {
