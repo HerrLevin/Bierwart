@@ -10,6 +10,9 @@ use App\Scaffolding\Response;
 
 class BeverageController
 {
+    /**
+     * Gibt eine Liste aller Getränke in der Datenbank aus
+     */
     public static function getDrinksOverview():void {
         $result = DB::table("beverage bev")
             ->select(['bev.id', ' bev.name', ' bev.size', ' type.price'])
@@ -18,6 +21,11 @@ class BeverageController
         Response::json(data: $result);
     }
 
+    /**
+     * Ein Benutzer entnimmt bzw. stellt ein oder mehrere Gebinde eines Getränks zurück
+     * @param $args
+     * @throws \App\Exceptions\NotFoundException
+     */
     public static function createBeverageMovement($args): void
     {
         $request = new Request();
@@ -38,6 +46,11 @@ class BeverageController
         Response::status(404);
     }
 
+    /**
+     *  Ein Administrator legt ein neues Getränk eines Getränketyps an
+     * @todo validate if user is
+     * @throws \App\Exceptions\NotFoundException
+     */
     public static function createBeverage(): void {
         $request = new Request();
         try {
@@ -53,6 +66,29 @@ class BeverageController
         }
 
         $response = DB::table("beverage")->insert($request->validated);
+        if ($response > 0) {
+            Response::status(201);
+        }
+        Response::status(404);
+    }
+
+    /**
+     * Ein Administrator legt einen neuen Getränketyp (bspw. Softdrink) mit einem Preis an
+     * @todo Check if administrator
+     * @throws \App\Exceptions\NotFoundException
+     */
+    public static function createDrinkType(): void {
+        $request = new Request();
+        try {
+            $request->validate(rules: [
+                'name' => 'required',
+                'price' => 'required|integer|notnegative',
+            ]);
+        } catch (ValidationException $exception) {
+            Response::error(message: $exception->getMessage(), status: 400);
+        }
+
+        $response = DB::table("drink_type")->insert($request->validated);
         if ($response > 0) {
             Response::status(201);
         }

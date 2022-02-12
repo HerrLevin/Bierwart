@@ -7,6 +7,10 @@ use App\Scaffolding\Response;
 
 class AccountController
 {
+    /**
+     * Returns all account balances with deposit/withdrawal-sum and consumption
+     *
+     */
     public static function getBalances()
     {
         $result = DB::table("user")

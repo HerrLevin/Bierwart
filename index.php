@@ -17,7 +17,8 @@ $router->get('/', Bierwart::class, 'printHelloWorld');
 $router->get('/useroverview', UserController::class, 'getUserOverview');
 $router->get('/accountbalances', AccountController::class, 'getBalances');
 $router->get('/drinksoverview', BeverageController::class, 'getDrinksOverview');
-$router->post('/orderDrink', BeverageController::class, 'createBeverageMovement');
-$router->post('/createDrink', BeverageController::class, 'createBeverage');
+$router->post('/orderBeverage', BeverageController::class, 'createBeverageMovement');
+$router->post('/createBeverage', BeverageController::class, 'createBeverage');
+$router->post('/createDrinkType', BeverageController::class, 'createDrinkType');
 
 Router::abort();
