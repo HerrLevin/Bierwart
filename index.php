@@ -6,6 +6,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\Core\AccountController;
 use App\Core\BeverageController;
 use App\Core\Bierwart;
+use App\Core\ReportsController;
 use App\Core\UserController;
 use App\Scaffolding\Router;
 
@@ -22,5 +23,6 @@ $router->get('/drinksoverview', BeverageController::class, 'getDrinksOverview');
 $router->post('/orderBeverage', BeverageController::class, 'createBeverageMovement');
 $router->post('/createBeverage', BeverageController::class, 'createBeverage');
 $router->post('/createDrinkType', BeverageController::class, 'createDrinkType');
+$router->get('/generateReport', ReportsController::class, 'generateReport');
 
 Router::abort();

@@ -15,14 +15,30 @@ class AccountController
      */
     public static function getBalances()
     {
-        $result = DB::table("user")
+        Response::json(data: self::parseBalances());
+    }
+
+    public static function parseBalances($timestamp = "tomorrow") {
+        $date = date(format: "Y-m-d", timestamp: strtotime($timestamp));
+
+        return DB::table("user")
             ->select(['SUM(bm.quantity*dt.price) as konsum', ' konto', ' konto-SUM(bm.quantity*dt.price) as ist', ' user.id_account'])
-            ->innerJoin(table: 'beverage_movement bm', first: 'user.id', operator:'=', second:'bm.id_user')
+            ->innerJoin(
+                table: DB::table(name: 'beverage_movement bm')
+                    ->select(columns: ['id_user', 'id_beverage', 'SUM(quantity) as quantity'])
+                    ->where(first:'DATE(created_at)', operator: '<', second: "'$date'")
+                    ->groupBy(group: 'id_beverage, id_user')
+                    ->as(alias: 'bm')
+                    ->query(),
+                first: 'user.id',
+                operator:'=',
+                second:'bm.id_user')
             ->innerJoin(table: 'beverage', first: 'bm.id_beverage', operator: '=', second: 'beverage.id')
             ->innerJoin(table: 'drink_type dt', first: 'beverage.id_drink_type', operator: '=', second: 'dt.id')
             ->innerJoin(
                 table: DB::table(name: "account_movement am")
                     ->select(columns: ['SUM(amount) as konto', 'am.id_account'])
+                    ->where(first:'DATE(created_at)', operator: '<', second: "'$date'")
                     ->groupBy(group: 'am.id_account')
                     ->as('test')
                     ->query(),
@@ -32,7 +48,6 @@ class AccountController
             )
             ->groupBy(group: 'user.id_account')
             ->get();
-        Response::json(data: $result);
     }
 
 
