@@ -74,6 +74,18 @@ class SqLite implements QueryBuilder
         return $this;
     }
 
+    public function update(array $data) {
+        $updateValues = "";
+        foreach ($data as $key=>$value) {
+            $updateValues .= strtr("key=value,", ["key" => $key, "value" => $value]);
+        }
+
+        $replacements = ['db_table' => $this->table, 'values' => rtrim($updateValues, ',')];
+
+        $this->query = strtr("UPDATE db_table SET values ", $replacements);
+        return $this;
+    }
+
     public function select(array $columns = ['*']): static
     {
         $this->decodeData($columns);
@@ -125,6 +137,30 @@ class SqLite implements QueryBuilder
         return $this;
     }
 
+    private function operation(string $first, string $operator, string $second): string {
+        $replacements = [
+            'first' => $first,
+            'operator' => $operator,
+            'second' => $second
+        ];
+        return strtr(" firstoperatorsecond ", $replacements);
+    }
+
+    public function where(string $first, string $operator, string $second): static {
+        $this->query .= " WHERE " . $this->operation(first: $first, operator: $operator, second: $second);
+        return $this;
+    }
+
+    public function andWhere(string $first, string $operator, string $second): static {
+        $this->query .= " AND " . $this->operation(first: $first, operator: $operator, second: $second);
+        return $this;
+    }
+
+    public function orWhere(string $first, string $operator, string $second): static {
+        $this->query .= " OR " . $this->operation(first: $first, operator: $operator, second: $second);
+        return $this;
+    }
+
     public function get(): bool|array
     {
         $this->prepareQuery();
@@ -136,7 +172,8 @@ class SqLite implements QueryBuilder
         $this->pdostatement = $this->pdo->query($this->query . ";");
     }
 
-    private function execute(): bool {
-        return $this->pdostatement->execute();
+    public function execute(): static {
+        $this->pdo->exec($this->query);
+        return $this;
     }
 }

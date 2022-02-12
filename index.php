@@ -15,6 +15,7 @@ $router = new Router($request);
 
 $router->get('/', Bierwart::class, 'printHelloWorld');
 $router->get('/useroverview', UserController::class, 'getUserOverview');
+$router->post('/createUser', UserController::class, 'createUser');
 $router->post('/createAccountMovement', AccountController::class, 'createAccountMovement');
 $router->get('/accountbalances', AccountController::class, 'getBalances');
 $router->get('/drinksoverview', BeverageController::class, 'getDrinksOverview');

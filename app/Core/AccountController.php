@@ -34,6 +34,8 @@ class AccountController
             ->get();
         Response::json(data: $result);
     }
+
+
     public static function createAccount() {
         $request = new Request();
         try {
@@ -66,6 +68,9 @@ class AccountController
     }
 
 
+    /**
+     * Ein Nutzer Geld in seinen Account ein oder aus
+     */
     public static function createAccountMovement() {
         $request = new Request();
         try {

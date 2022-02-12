@@ -14,7 +14,9 @@ class Validatable
         'required' => RuleRequired::class,
         'numeric' => RuleNumeric::class,
         'integer' => RuleInteger::class,
-        'notnegative' => RuleNotNegative::class
+        'notnegative' => RuleNotNegative::class,
+        'mail' => RuleMail::class,
+        'bool' => RuleBoolean::class
     ];
 
     public function __construct($key, $value, $ruleset)
