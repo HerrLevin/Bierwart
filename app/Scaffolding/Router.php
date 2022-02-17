@@ -4,6 +4,7 @@ namespace App\Scaffolding;
 
 
 use App\Exceptions\TaskFailedSuccessfullyException;
+use Error;
 use JetBrains\PhpStorm\NoReturn;
 use JsonException;
 use Prophecy\Exception\Doubler\InterfaceNotFoundException;
@@ -51,7 +52,7 @@ class Router
             $class = new $this->file();
             $class->{$this->method}($args);
             throw new TaskFailedSuccessfullyException();
-        } catch (JsonException $e) {
+        }catch (Error | JsonException $e) {
             http_response_code(500);
             echo '{"message": "' . $e->getMessage() . '"}';
         } catch (InterfaceNotFoundException) {
@@ -81,7 +82,6 @@ class Router
      */
     #[NoReturn] public static function abort(int $code = 404, string $message = null): void
     {
-        header('Content-Type: application/json');
         if ($code === 404 && !$message) {
             $message = "Resource not found!";
         }
