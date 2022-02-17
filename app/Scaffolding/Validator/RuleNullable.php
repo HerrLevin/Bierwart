@@ -16,6 +16,6 @@ class RuleNullable implements Validation
             return true;
         }
 
-        throw new ValidationException("integer", $key, $value);
+        throw new ValidationException("nullable", $key, $value);
     }
 }

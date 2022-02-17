@@ -13,7 +13,7 @@ class RuleMail implements Validation
     public function validate($key, $value)
     {
         if (!empty($value) && !preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $value)) {
-            throw new ValidationException("numeric", $key, $value);
+            throw new ValidationException("mail", $key, $value);
         }
         return true;
     }
