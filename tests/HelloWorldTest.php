@@ -3,7 +3,7 @@
 // Autoload files using the Composer autoloader.
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Bierwart\Bierwart;
+use App\Core\Bierwart;
 use PHPUnit\Framework\TestCase;
 
 final class HelloWorldTest extends TestCase
