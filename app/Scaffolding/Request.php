@@ -12,9 +12,13 @@ class Request
     private null|array $jsonBody;
     public array $validated;
 
-    public function __construct() {
-        $this->body = file_get_contents(filename: 'php://input');
-        $this->jsonBody = json_decode(json: $this->body, associative: true);
+    public function __construct(string $body = null) {
+        $this->body = $body;
+        $this->jsonBody = null;
+    }
+
+    public static function create($body = null): static {
+        return new static($body);
     }
 
     /**
@@ -24,6 +28,7 @@ class Request
      * @throws NotFoundException
      */
     public function bodyParam(string $name): string|array|null {
+        $this->prepareJsonBody();
         if (!isset($this->jsonBody[$name])) {
             throw new NotFoundException();
         }
@@ -36,6 +41,7 @@ class Request
      * @return bool
      */
     public function issetBody(string $name): bool {
+        $this->prepareJsonBody();
         if (isset($this->jsonBody[$name])) {
             return true;
         }
@@ -47,11 +53,25 @@ class Request
      * @return string|null
      */
     public function getBody(): string|null {
+        if ($this->body === null) {
+            $this->body = file_get_contents(filename: 'php://input');
+        }
         return $this->body;
     }
 
     public function getJsonBody(): array|null {
+        $this->prepareJsonBody();
         return $this->jsonBody;
+    }
+
+    private function prepareJsonBody():void {
+        if ($this->jsonBody === null) {
+            try {
+                $this->jsonBody = json_decode(json: $this->body, associative: true, flags: JSON_THROW_ON_ERROR);
+            } catch (\JsonException) {
+                $this->jsonBody = null;
+            }
+        }
     }
 
     /**
@@ -60,6 +80,7 @@ class Request
      */
     public function validate(array $rules): void
     {
+        $this->prepareJsonBody();
         $validator = new Validator($rules, $this->getJsonBody());
         $validator->validate();
         $this->validated = array_intersect_key($this->getJsonBody(), array_flip(array_keys($rules)));
