@@ -6,18 +6,55 @@ use App\Exceptions\ValidationException;
 use App\Scaffolding\Database\DB;
 use App\Scaffolding\Request;
 use App\Scaffolding\Response;
+use OpenApi\Annotations as OA;
 
 class AccountController
 {
     /**
-     * Returns all account balances with deposit/withdrawal-sum and consumption
-     *
+     * @OA\OpenApi(
+     *   x={
+     *       "tagGroups"=
+     *           {{"name"="User Management", "tags"={"Users", "API keys", "Admin"}}
+     *       }
+     *   }
+     * )
+     * @OA\Get(
+     *     tags={"Accounts"},
+     *     path="/accountbalances",
+     *     description="Returns all account balances with deposit/withdrawal-sum and consumption",
+     *     @OA\Response(
+     *     response=200,
+     *     description="OK",
+     *          @OA\JsonContent(
+     *              @OA\Examples(example="result", value={
+     *     "data": {
+     *     {
+     *     "konsum": 2100,
+     *     "konto": 900,
+     *     "ist": -1200,
+     *     "id_account": 1
+     *     },
+     *     {
+     *     "konsum": 350,
+     *     "konto": 500,
+     *     "ist": 150,
+     *     "id_account": 2
+     *     }
+     *     }
+     *     }, summary="An result object."),
+     *          )
+     *     )
+     *)
      */
     public static function getBalances()
     {
         Response::json(data: self::parseBalances());
     }
 
+    /**
+     * Returns all account balances with deposit/withdrawal-sum and consumption
+     *
+     */
     public static function parseBalances($timestamp = "tomorrow") {
         $date = date(format: "Y-m-d", timestamp: strtotime($timestamp));
 
