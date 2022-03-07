@@ -10,12 +10,13 @@ use App\Core\ReportsController;
 use App\Core\UserController;
 use App\Exceptions\TaskFailedSuccessfullyException;
 use App\Scaffolding\Router;
+use OpenApi\Annotations as OA;
 
 
 $request = $_SERVER['REQUEST_URI'];
 $router = new Router($request);
 try {
-    $router->get('/', Bierwart::class, 'printHelloWorld');
+    $router->get('/', Bierwart::class, 'getHelloWorld');
     $router->get('/useroverview', UserController::class, 'getUserOverview');
     $router->post('/createUser', UserController::class, 'createUser');
     $router->post('/createAccountMovement', AccountController::class, 'createAccountMovement');

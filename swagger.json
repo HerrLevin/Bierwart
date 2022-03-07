@@ -1,0 +1,20 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bierwart API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Bierwart Demo Bier!",
+                "operationId": "45ffa7307393ad94d57a2087d978d9a4",
+                "responses": {
+                    "200": {
+                        "description": "AOK"
+                    }
+                }
+            }
+        }
+    }
+}
