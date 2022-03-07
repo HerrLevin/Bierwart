@@ -11,17 +11,10 @@ use OpenApi\Annotations as OA;
 class AccountController
 {
     /**
-     * @OA\OpenApi(
-     *   x={
-     *       "tagGroups"=
-     *           {{"name"="User Management", "tags"={"Users", "API keys", "Admin"}}
-     *       }
-     *   }
-     * )
      * @OA\Get(
      *     tags={"Accounts"},
      *     path="/accountbalances",
-     *     description="Returns all account balances with deposit/withdrawal-sum and consumption",
+     *     summary="Returns all account balances with deposit/withdrawal-sum and consumption",
      *     @OA\Response(
      *     response=200,
      *     description="OK",
@@ -145,7 +138,25 @@ class AccountController
 
 
     /**
-     * Ein Nutzer Geld in seinen Account ein oder aus
+     * @OA\Post(
+     *     tags={"Accounts"},
+     *     path="/createAccountMovement",
+     *     summary="A user deposits or withdraws money from their account",
+     *     @OA\RequestBody(
+     *     required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  required={"id_account", "amount"},
+     *                  @OA\Property(property="id_account", type="integer", description="id of account"),
+     *                  @OA\Property(property="amount", type="integer", description="money to be transfered"),
+     *                  @OA\Property(property="is_deposit", type="boolean", description="depositing money?", default="false"),
+     *                  @OA\Property(property="comment", type="string", description="comment to be added to transfer", default=null)
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(response=201, description="Created")
+     *)
      */
     public static function createAccountMovement() {
         $request = new Request();

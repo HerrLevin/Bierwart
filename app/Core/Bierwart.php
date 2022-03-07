@@ -13,7 +13,7 @@ class Bierwart {
     /**
      * @OA\Get(
      *     path="/",
-     *     description="Bierwart Demo Bier!",
+     *     summary="Bier Bier Bier Bier!",
      *     @OA\Response(response= 200, description= "AOK")
      * )
      */

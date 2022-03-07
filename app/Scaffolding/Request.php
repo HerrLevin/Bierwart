@@ -67,8 +67,9 @@ class Request
     private function prepareJsonBody():void {
         if ($this->jsonBody === null) {
             try {
-                $this->jsonBody = json_decode(json: $this->body, associative: true, flags: JSON_THROW_ON_ERROR);
+                $this->jsonBody = json_decode(json: $this->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
             } catch (\JsonException) {
+                Response::error(status: 400, message: "Malformatted JSON");
                 $this->jsonBody = null;
             }
         }
