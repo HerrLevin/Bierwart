@@ -14,6 +14,7 @@ class Bierwart {
      * @OA\Get(
      *     path="/",
      *     summary="Bier Bier Bier Bier!",
+     *     tags={"Bierwart"},
      *     @OA\Response(response= 200, description= "AOK")
      * )
      */

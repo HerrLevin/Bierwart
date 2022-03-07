@@ -58,10 +58,9 @@ class BeverageController
      *     @OA\Response(response=201, description="Created")
      * )
      *
-     * @param $args
      * @throws \App\Exceptions\NotFoundException
      */
-    public static function createBeverageMovement($args): void
+    public static function createBeverageMovement(): void
     {
         $request = new Request();
         try {
