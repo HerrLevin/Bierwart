@@ -14,6 +14,7 @@ class AccountController
      * @OA\Get(
      *     tags={"Accounts"},
      *     path="/accountbalances",
+     *     operationId="getAccountBalances",
      *     summary="Returns all account balances with deposit/withdrawal-sum and consumption",
      *     @OA\Response(
      *     response=200,
@@ -141,6 +142,7 @@ class AccountController
      * @OA\Post(
      *     tags={"Accounts"},
      *     path="/createAccountMovement",
+     *     operationId="createAccountMovement",
      *     summary="A user deposits or withdraws money from their account",
      *     @OA\RequestBody(
      *     required=true,

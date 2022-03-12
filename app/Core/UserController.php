@@ -13,6 +13,7 @@ class UserController
     /**
      * @OA\Get(
      *     path="/useroverview",
+     *     operationId="getUserOverview",
      *     summary="returns a list of all users in the database",
      *     tags={"User"},
      *     @OA\Response(
@@ -42,6 +43,7 @@ class UserController
      * @throws \App\Exceptions\NotFoundException
      * @OA\Post(
      *     path="/createUser",
+     *     operationId="createNewUser",
      *     summary="An administrator adds a user and creates an account, if wanted",
      *     tags={"User"},
      *     security={ {"auth": {}} },

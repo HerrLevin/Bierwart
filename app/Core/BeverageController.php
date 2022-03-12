@@ -15,6 +15,7 @@ class BeverageController
     /**
      * @OA\Get(
      *     path="/drinksoverview",
+     *     operationId="getDrinksOverview",
      *     summary="returns a list of all drinks in the database",
      *     tags={"Beverage"},
      *     @OA\Response(
@@ -41,6 +42,7 @@ class BeverageController
     /**
      * @OA\Post(
      *     path="/orderBeverage",
+     *     operationId="orderBeverage",
      *     summary="A user consumes or returns one or more drinks",
      *     tags={"Beverage"},
      *     @OA\RequestBody(
@@ -87,6 +89,7 @@ class BeverageController
      *
      * @OA\Post(
      *     path="/createBeverage",
+     *     operationId="createNewBeverage",
      *     summary="An administrator creates a new drink of a drink type",
      *     tags={"Beverage"},
      *     security={ {"auth": {}} },
@@ -134,6 +137,7 @@ class BeverageController
      * @throws \App\Exceptions\NotFoundException
      * @OA\Post(
      *     path="/createDrinkType",
+     *     operationId="createNewDrinkType",
      *     summary="An administrator creates a new drink type (e.g. Softdrink) with a fixed price",
      *     tags={"Beverage"},
      *     security={ {"auth": {}} },
