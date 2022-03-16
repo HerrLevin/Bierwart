@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper,titlepage,ngerman,pdftex]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{acronym}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{listings}
+\geometry{a4paper, top=25mm, left=25mm, right=25mm, bottom=25mm,
+headsep=10mm, footskip=12mm}
+
+
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%    TITLE    %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+	\centering
+	%\includegraphics[width=0.15\textwidth]{pic/picsim_logo_full.png}\par\vspace{1cm}
+	{\scshape\LARGE Duale Hochschule Baden-Württemberg \par}
+	\vspace{1cm}
+	{\scshape\Large Dokumentation\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Bierwart\par}
+	\vspace{2cm}
+	{\Large\itshape Levin Baumann, Marius Holwein\par}
+	\vfill
+	Dozent\par
+	Daniel \textsc{Lindner}
+
+	\vfill
+
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%  LISTINGS  %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{Roman} 
+\tableofcontents
+\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%  Acronym  %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Abkürzungsverzeichnis}
+\begin{acronym}[all]
+	\acro{dhbw}[DHBW]{Duale Hochschule Baden-Württemberg}
+	\acro{rest}[REST]{REstful State Transfer}
+	\acro{api}[API]{Application Programming Interface}
+\end{acronym}
+\onehalfspacing
+
+
+\chapter{Einleitung}\label{einleitung}
+\pagenumbering{arabic}
+Lorem Ipsum, blah blah blah
+
+\chapter{Projektbeschreibung}
+Der Bierwart, im Rahmen dieser Abgabe, ist eine reine \ac{rest}-\ac{api}. Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}.
+Die \ac{api} ist mit Swagger dokumentiert und befindet sich unter \url{http://localhost:8000/swagger/}\footnote{nur nach erfolgreicher Einrichtung beschrieben in \ref{sec:einrichtung} möglich.}.
+Hier lassen sich mit Betätigung des Buttons \textit{Try it out} einzelne Requests ohne Zusatzprogramme ausführen.
+
+\section{Einrichtung}\label{sec:einrichtung}
+
+\begin{enumerate}
+    \item \texttt{git clone https://github.com/HerrLevin/Bierwart.git}
+    \item \texttt{cd Bierwart}
+    \item \texttt{composer install}
+    \item sqlite-Datenbank in \texttt{database} namens \texttt{database.sqlite} erstellen und\\ \texttt{default\_migration.sql} ausführen
+        \begin{itemize}
+            \item alternativ \texttt{database.bak.sqlite} in \texttt{database.sqlite} umbenennen
+        \end{itemize}
+    \item \texttt{php -S localhost:8000} im Hauptverzeichnis
+    \item \url{http://localhost:8000/swagger/} aufrufen
+\end{enumerate}
+
+
+\end{document}
