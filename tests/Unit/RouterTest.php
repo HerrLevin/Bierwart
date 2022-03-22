@@ -5,68 +5,90 @@ namespace Unit;
 // Autoload files using the Composer autoloader.
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use App\Exceptions\TaskFailedSuccessfullyException;
 use App\Scaffolding\Router;
+use Exception;
 use PHPUnit\Framework\TestCase;
+use Mockery as m;
 
 class RouterTest extends TestCase
 {
 
     public function testGetRoute():void
     {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/get');
+        } catch (Exception) {
+        }
         $this->expectOutputString('getRoute');
-        $this->mockHTTPRequest(path: '/get');
-
         $this->assertEquals(expected: 200, actual: http_response_code());
     }
 
     public function testPostRoute():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/post', method: 'POST');
+        } catch (Exception) {
+        }
         $this->expectOutputString('postRoute');
-        $this->mockHTTPRequest(path: '/post', method: 'POST');
-
         $this->assertEquals(expected: 200, actual: http_response_code());
     }
 
     public function testGet405():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/get', method: 'POST');
+        } catch (Exception) {
+        }
         $this->expectOutputString('{"message": "Method not allowed!"}');
-        $this->mockHTTPRequest(path: '/get', method: 'POST');
-
         $this->assertEquals(expected: 405, actual: http_response_code());
     }
 
     public function testPost405():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/post');
+        } catch (Exception) {
+        }
         $this->expectOutputString('{"message": "Method not allowed!"}');
-        $this->mockHTTPRequest(path: '/post');
-
         $this->assertEquals(expected: 405, actual: http_response_code());
     }
 
     public function testGetRouteNotFound():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/notDefinedRoute');
+        }catch (Exception) {
+        }
         $this->expectOutputString('{"message": "Resource not found!"}');
-        $this->mockHTTPRequest(path: '/notDefinedRoute');
-
         $this->assertEquals(expected: 404, actual: http_response_code());
     }
 
     public function testPostRouteNotFound():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/notDefinedRoute', method: 'POST');
+        } catch (Exception) {
+        }
         $this->expectOutputString('{"message": "Resource not found!"}');
-        $this->mockHTTPRequest(path: '/notDefinedRoute', method: 'POST');
-
         $this->assertEquals(expected: 404, actual: http_response_code());
     }
 
     public function testWrongRouterUsage():void {
-        $this->expectException(exception: TaskFailedSuccessfullyException::class);
-        $this->expectOutputString('{"message": "Call to undefined method Unit\RouterTest::thisDoesNotExist()"}{"message": "Resource not found!"}');
-        $this->mockHTTPRequest(path: '/missmatchMethod', method: 'GET');
-
-        $this->assertEquals(expected: 50, actual: http_response_code());
+        try {
+            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock->shouldReceive('dd')->andThrow(new Exception);
+            $this->mockHTTPRequest(path: '/missmatchMethod', method: 'GET');
+        } catch (Exception) {
+        }
+        $this->expectOutputString('{"message": "Call to undefined method Unit\RouterTest::thisDoesNotExist()"}');
+        $this->assertEquals(expected: 500, actual: http_response_code());
     }
 
     private function mockHTTPRequest(string $path='/', string $method='GET'):void {

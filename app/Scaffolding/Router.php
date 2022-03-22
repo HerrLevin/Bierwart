@@ -3,7 +3,6 @@
 namespace App\Scaffolding;
 
 
-use App\Exceptions\TaskFailedSuccessfullyException;
 use Error;
 use JetBrains\PhpStorm\NoReturn;
 use JsonException;
@@ -42,7 +41,6 @@ class Router
     }
 
     /**
-     * @throws TaskFailedSuccessfullyException
      */
     protected function scaffoldRequest(): void
     {
@@ -51,10 +49,11 @@ class Router
             $args = $this->matchURI(route: $this->route, method: $this->httpMethod);
             $class = new $this->file();
             $class->{$this->method}($args);
-            throw new TaskFailedSuccessfullyException();
+            Helpers::dd();
         }catch (Error | JsonException $e) {
             http_response_code(500);
             echo '{"message": "' . $e->getMessage() . '"}';
+            Helpers::dd();
         } catch (InterfaceNotFoundException) {
             //
         }
@@ -78,7 +77,6 @@ class Router
      * Default "catch if no route", also handles all possible (error) return types with {"message": "foobar"} format
      * @param int $code
      * @param string|null $message
-     * @throws TaskFailedSuccessfullyException
      */
     #[NoReturn] public static function abort(int $code = 404, string $message = null): void
     {
@@ -87,7 +85,7 @@ class Router
         }
         http_response_code($code);
         echo '{"message": "' . $message . '"}';
-        throw new TaskFailedSuccessfullyException();
+        Helpers::dd();
     }
 
     public function post(string $route, string $file, string $method): void
