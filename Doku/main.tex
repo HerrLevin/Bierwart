@@ -13,76 +13,162 @@
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{textcomp}
 \geometry{a4paper, top=25mm, left=25mm, right=25mm, bottom=25mm,
-headsep=10mm, footskip=12mm}
+    headsep=10mm, footskip=12mm}
+\usepackage{xcolor}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.827, 0.827, 0.827}
+\definecolor{dkblue}{rgb}{0,0,.6}
+\definecolor{dkyellow}{cmyk}{0,0,.8,.3}
 
+\lstset{
+    language        = php,
+    basicstyle      = \small\ttfamily,
+    keywordstyle    = \color{dkblue},
+    stringstyle     = \color{red},
+    identifierstyle = \color{mygreen},
+    commentstyle    = \color{gray},
+    emph            =[1]{php},
+    emphstyle       =[1]\color{black},
+    emph            =[2]{if,and,or,else},
+    emphstyle       =[2]\color{dkyellow}}
+
+\lstset{ %
+    backgroundcolor=\color{backcolour},   % choose the background color
+    basicstyle=\footnotesize,        % size of fonts used for the code
+    breaklines=true,                 % automatic line breaking only at whitespace
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygreen},    % comment style
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    keywordstyle=\color{blue},       % keyword style
+    stringstyle=\color{mymauve},     % string literal stylebreakatwhitespace=false,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=true,
+    showtabs=false,
+    tabsize=2
+}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%    TITLE    %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{titlepage}
-	\centering
-	%\includegraphics[width=0.15\textwidth]{pic/picsim_logo_full.png}\par\vspace{1cm}
-	{\scshape\LARGE Duale Hochschule Baden-Württemberg \par}
-	\vspace{1cm}
-	{\scshape\Large Dokumentation\par}
-	\vspace{1.5cm}
-	{\huge\bfseries Bierwart\par}
-	\vspace{2cm}
-	{\Large\itshape Levin Baumann, Marius Holwein\par}
-	\vfill
-	Dozent\par
-	Daniel \textsc{Lindner}
+    \begin{titlepage}
+        \centering
+        %\includegraphics[width=0.15\textwidth]{pic/picsim_logo_full.png}\par\vspace{1cm}
+        {\scshape\LARGE Duale Hochschule Baden-Württemberg \par}
+        \vspace{1cm}
+        {\scshape\Large Dokumentation\par}
+        \vspace{1.5cm}
+        {\huge\bfseries Bierwart\par}
+        \vspace{2cm}
+        {\Large\itshape Levin Baumann, Marius Holwein\par}
+        \vfill
+        Dozent\par
+        Daniel \textsc{Lindner}
 
-	\vfill
+        \vfill
 
 % Bottom of the page
-	{\large \today\par}
-\end{titlepage}
+        {\large \today\par}
+    \end{titlepage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%  LISTINGS  %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pagenumbering{Roman} 
-\tableofcontents
-\listoffigures
+    \pagenumbering{Roman}
+    \tableofcontents
+    \listoffigures
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%  Acronym  %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter*{Abkürzungsverzeichnis}
-\begin{acronym}[all]
-	\acro{dhbw}[DHBW]{Duale Hochschule Baden-Württemberg}
-	\acro{rest}[REST]{REstful State Transfer}
-	\acro{api}[API]{Application Programming Interface}
-\end{acronym}
-\onehalfspacing
+    \chapter*{Abkürzungsverzeichnis}
+    \begin{acronym}[all]
+        \acro{dhbw}[DHBW]{Duale Hochschule Baden-Württemberg}
+        \acro{rest}[REST]{REstful State Transfer}
+        \acro{api}[API]{Application Programming Interface}
+    \end{acronym}
+    \onehalfspacing
 
 
-\chapter{Einleitung}\label{einleitung}
-\pagenumbering{arabic}
-Lorem Ipsum, blah blah blah
+    \chapter{Einleitung}\label{ch:einleitung}
+    \pagenumbering{arabic}
+    Lorem Ipsum, blah blah blah
 
-\chapter{Projektbeschreibung}
-Der Bierwart, im Rahmen dieser Abgabe, ist eine reine \ac{rest}-\ac{api}. Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}.
-Die \ac{api} ist mit Swagger dokumentiert und befindet sich unter \url{http://localhost:8000/swagger/}\footnote{nur nach erfolgreicher Einrichtung beschrieben in \ref{sec:einrichtung} möglich.}.
-Hier lassen sich mit Betätigung des Buttons \textit{Try it out} einzelne Requests ohne Zusatzprogramme ausführen.
 
-\section{Einrichtung}\label{sec:einrichtung}
+    \chapter{Projektbeschreibung}\label{ch:projektbeschreibung}
+    Der Bierwart, im Rahmen dieser Abgabe, ist eine reine \ac{rest}-\ac{api}. Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}.
+    Die \ac{api} ist mit Swagger dokumentiert und befindet sich unter \url{http://localhost:8000/swagger/}\footnote{nur nach erfolgreicher Einrichtung beschrieben in \ref{sec:einrichtung} möglich.}.
+    Hier lassen sich mit Betätigung des Buttons \textit{Try it out} einzelne Requests ohne Zusatzprogramme ausführen.
 
-\begin{enumerate}
-    \item \texttt{git clone https://github.com/HerrLevin/Bierwart.git}
-    \item \texttt{cd Bierwart}
-    \item \texttt{composer install}
-    \item sqlite-Datenbank in \texttt{database} namens \texttt{database.sqlite} erstellen und\\ \texttt{default\_migration.sql} ausführen
+
+    \section{Einrichtung}\label{sec:einrichtung}
+
+    \begin{enumerate}
+        \item \texttt{git clone https://github.com/HerrLevin/Bierwart.git}
+        \item \texttt{cd Bierwart}
+        \item \texttt{composer install}
+        \item sqlite-Datenbank in \texttt{database} namens \texttt{database.sqlite} erstellen und\\ \texttt{default\_migration.sql} ausführen
         \begin{itemize}
             \item alternativ \texttt{database.bak.sqlite} in \texttt{database.sqlite} umbenennen
         \end{itemize}
-    \item \texttt{php -S localhost:8000} im Hauptverzeichnis
-    \item \url{http://localhost:8000/swagger/} aufrufen
-\end{enumerate}
+        \item \texttt{php -S localhost:8000} im Hauptverzeichnis
+        \item \url{http://localhost:8000/swagger/} aufrufen
+    \end{enumerate}
+
+
+    \chapter{Entwicklung}\label{ch:entwicklung}
+    %Idk, was hier alles rein soll
+
+
+    \section{Refactoring}\label{sec:refactoring}
+
+    \subsection{Router}\label{subsec:router}
+    Der Router des Projektes funktioniert nach einem "First Pattern Matching"-Prinzip.
+    Um dies in der Routenkonfiguration leicht umzusetzen, beendet sich die Ausführung des Prozesses, sobald eine Route gefunden und die entsprechende Methode darin ausgeführt wurde.
+    Dies geschah anfangs über ein \verb|exit(0);|, was leider untestbar ist.
+    Der hier entsprechende Codesmell sind \href{https://refactoring.guru/refactoring/technical-debt}{technische Schulden}, da dieses Codefragment zunächst nur als ungetestetes MVP diente und die Folgen der \glqq Untestbarkeit\grqq{} zunächst nicht bewusst waren.
+    Um dieses Problem zu umgehen, ersetzten wir zunächst diese Zeile durch das Werfen einer eigenen Exception: \verb|throw new TaskFailedSuccessfullyException();|\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/b56b8ea86c12fe04e9f5ead235ca783f14aa1910}}
+
+    Diese konnten wir sowohl in unseren Tests abfangen, als auch in unserer \verb|index.php|:
+
+    \begin{lstlisting}[language=php,label={lst:lstlisting}]
+$request = $_SERVER['REQUEST_URI'];
+$router = new Router($request);
+try {
+    $router->get('/', Bierwart::class, 'getHelloWorld');
+    $router->get('/generateReport', ReportsController::class, 'generateReport');
+
+    Router::abort();
+} catch (TaskFailedSuccessfullyException) {
+//This place is a message... and part of a system of messages... pay attention to it!
+//Sending this message was important to us. We considered ourselves to be a powerful culture.
+//This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.
+//What is here was dangerous and repulsive to us. This message is a warning about danger.
+//The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.
+//The danger is still present, in your time, as it was in ours.
+//The danger is to the body, and it can kill.
+//The form of the danger is an emanation of energy.
+//The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.
+}
+    \end{lstlisting}
+\noindent
+    Im weiteren Verlauf, wurde die statische Methode \verb|Helpers::dd();| eingeführt.
+    Diese steht für \textit{Dump \& Die} -- sie gibt, sofern mitgegeben, einen Dump einer Variable aus und beendet den aktuellen Prozess.
+    Dies hat den Vorteil zur Folge, dass der Aufruf der statischen Methode in Tests mockbar ist.
+
+    Dummerweise hat somit die \verb|TaskFailedSuccessfullyException| dieselbe funktionalität wie \verb|dd()|.
+    Der hierfür entsprechende Codesmell ist die \href{https://pragmaticways.com/31-code-smells-you-must-know/#6_Oddball_Solution}{Oddball Solution}.
+    Deshalb haben wir die ungewöhnlichere und technisch teurere Funktionalität der Exception ausgetauscht durch \verb|dd()|.\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/20e8c915281df7b791abdbded9d593fbce22344f}}
+
+    In beiden Fällen wurde hierfür das \href{https://refactoring.guru/substitute-algorithm}{Substitute Algorithm}-Prinzip zum Refactoring genutzt.
 
 
 \end{document}
