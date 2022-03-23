@@ -3,12 +3,12 @@
 // Autoload files using the Composer autoloader.
 require_once __DIR__ . '/vendor/autoload.php';
 
-use App\Core\AccountController;
-use App\Core\BeverageController;
-use App\Core\Bierwart;
-use App\Core\ReportsController;
-use App\Core\UserController;
-use App\Scaffolding\Router;
+use App\Adapters\Controllers\AccountController;
+use App\Adapters\Controllers\BeverageController;
+use App\Adapters\Controllers\Bierwart;
+use App\Adapters\Controllers\ReportsController;
+use App\Adapters\Controllers\UserController;
+use App\Adapters\Router;
 
 
 $request = $_SERVER['REQUEST_URI'];

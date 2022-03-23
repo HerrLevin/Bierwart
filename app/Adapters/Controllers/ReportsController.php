@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Core;
+namespace App\Adapters\Controllers;
 
 use App\Adapters\Response;
+use App\Core\AccountController;
+use App\Core\ReportsControllerInterface;
 
-class ReportsController
+class ReportsController implements ReportsControllerInterface
 {
     public static function generateReport() {
         $balancesRecentMonth = AccountController::parseBalances('first day of -1 month');

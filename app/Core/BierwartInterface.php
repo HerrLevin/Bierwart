@@ -2,13 +2,9 @@
 
 namespace App\Core;
 
-use App\Adapters\Response;
-use OpenApi\Annotations as OA;
-
-class Bierwart {
-	public function printHelloWorld() {
-        return 'Bier Bier Bier Bier!';
-    }
+interface BierwartInterface
+{
+    public function printHelloWorld();
 
     /**
      * @OA\Get(
@@ -19,7 +15,5 @@ class Bierwart {
      *     @OA\Response(response= 200, description= "AOK")
      * )
      */
-    public function getHelloWorld() {
-        Response::json(data: $this->printHelloWorld());
-    }
+    public function getHelloWorld();
 }

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Core;
+namespace App\Adapters\Controllers;
 
-use App\Exceptions\ValidationException;
 use App\Adapters\Database\DB;
 use App\Adapters\Request;
 use App\Adapters\Response;
+use App\Core\UserControllerInterface;
+use App\Exceptions\ValidationException;
 use OpenApi\Annotations as OA;
 
-class UserController
+class UserController implements UserControllerInterface
 {
     /**
      * @OA\Get(

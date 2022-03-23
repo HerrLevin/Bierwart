@@ -2,6 +2,8 @@
 
 namespace App\Adapters\Database;
 
+use App\Plugins\Database\SqLite;
+
 
 class DB
 {

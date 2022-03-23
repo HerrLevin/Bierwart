@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Adapters\Database;
+namespace App\Plugins\Database;
 
+use App\Adapters\Database\QueryBuilder;
 use App\Config;
 use App\Exceptions\DBException;
 use PDO;

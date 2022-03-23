@@ -2,15 +2,8 @@
 
 namespace App\Core;
 
-use App\Exceptions\ValidationException;
-use App\Adapters\Database\DB;
-use App\Adapters\Request;
-use App\Adapters\Response;
-use OpenApi\Annotations as OA;
-
-class BeverageController
+interface BeverageControllerInterface
 {
-
     /**
      * @OA\Get(
      *     path="/drinksoverview",
@@ -30,13 +23,7 @@ class BeverageController
      * )
      * )
      */
-    public static function getDrinksOverview():void {
-        $result = DB::table("beverage bev")
-            ->select(['bev.id', ' bev.name', ' bev.size', ' type.price'])
-            ->innerJoin('drink_type type', 'bev.id_drink_type', '=', 'type.id')
-            ->get();
-        Response::json(data: $result);
-    }
+    public static function getDrinksOverview(): void;
 
     /**
      * @OA\Post(
@@ -61,29 +48,10 @@ class BeverageController
      *
      * @throws \App\Exceptions\NotFoundException
      */
-    public static function createBeverageMovement(): void
-    {
-        $request = new Request();
-        try {
-            $request->validate(rules: [
-                'id_user' => 'required|integer',
-                'id_beverage' => 'required|integer',
-                'quantity' => 'required|integer'
-            ]);
-        } catch (ValidationException $exception) {
-            Response::error(message: $exception->getMessage(), status: 400);
-        }
-
-        $response = DB::table("beverage_movement")->insert($request->validated);
-        if ($response->pdo->lastInsertId() > 0) {
-            Response::status(201);
-        }
-        Response::status(404);
-    }
+    public static function createBeverageMovement(): void;
 
     /**
      *  Ein Administrator legt ein neues Getränk eines Getränketyps an
-     * @todo validate if user is
      * @throws \App\Exceptions\NotFoundException
      *
      * @OA\Post(
@@ -108,31 +76,12 @@ class BeverageController
      *     ),
      *     @OA\Response(response=201, description="Created")
      * )
+     * @todo validate if user is
      */
-    private static function createBeverage(): void {
-        $request = new Request();
-        try {
-            $request->validate(rules: [
-                'id_drink_type' => 'required|integer',
-                'name' => 'required',
-                'size' => 'numeric',
-                'calories' => 'numeric',
-                'alcohol' => 'numeric'
-            ]);
-        } catch (ValidationException $exception) {
-            Response::error(message: $exception->getMessage(), status: 400);
-        }
-
-        $response = DB::table("beverage")->insert($request->validated);
-        if ($response->pdo->lastInsertId() > 0) {
-            Response::status(201);
-        }
-        Response::status(404);
-    }
+    public static function createBeverage(): void;
 
     /**
      * Ein Administrator legt einen neuen Getränketyp (bspw. Softdrink) mit einem Preis an
-     * @todo Check if administrator
      * @throws \App\Exceptions\NotFoundException
      * @OA\Post(
      *     path="/createDrinkType",
@@ -153,22 +102,7 @@ class BeverageController
      *     ),
      *     @OA\Response(response=201, description="Created")
      * )
+     * @todo Check if administrator
      */
-    public static function createDrinkType(): void {
-        $request = new Request();
-        try {
-            $request->validate(rules: [
-                'name' => 'required',
-                'price' => 'required|integer|notnegative',
-            ]);
-        } catch (ValidationException $exception) {
-            Response::error(message: $exception->getMessage(), status: 400);
-        }
-
-        $response = DB::table("drink_type")->insert($request->validated);
-        if ($response->pdo->lastInsertId() > 0) {
-            Response::status(201);
-        }
-        Response::status(404);
-    }
+    public static function createDrinkType(): void;
 }
