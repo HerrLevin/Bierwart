@@ -170,5 +170,10 @@ try {
 
     In beiden Fällen wurde hierfür das \href{https://refactoring.guru/substitute-algorithm}{Substitute Algorithm}-Prinzip zum Refactoring genutzt.
 
+    \subsection{DB::class}\label{subsec:db::class}
+    Weil wir am Anfang nicht richtig wussten, wo wir hin gehen mit unserem Code, bauten wir eine Klasse zum Kommunizieren mit der Datenbank: \verb|DB::class|
+    Da wir in einer super Vorlesung gelernt haben, dass es deutlich bessere Wege gibt, haben wir einen Query-Builder gebaut, der diese schlechte Klasse ablöst.
+    Das Ganze ist ein \href{https://refactoring.guru/smells/dead-code}{Dead Code} CodeSmell, deshalb haben wir die Klasse einfach gelöscht.\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/c8465100f3ea649a7e67be5ef4d1282134180e82}}
+
 
 \end{document}
