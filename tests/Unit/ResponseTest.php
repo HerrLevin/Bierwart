@@ -17,7 +17,7 @@ class ResponseTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     public function testStatus() {
-        $mock = m::mock('overload:App\Scaffolding\Helpers');
+        $mock = m::mock('overload:App\Adapters\Helpers');
         $mock->shouldReceive('dd')
             ->twice();
 
@@ -29,7 +29,7 @@ class ResponseTest extends TestCase
     }
 
     public function testJson() {
-        $mock = m::mock('overload:App\Scaffolding\Helpers');
+        $mock = m::mock('overload:App\Adapters\Helpers');
         $mock->shouldReceive('dd')
             ->times(3);
 
@@ -50,7 +50,7 @@ class ResponseTest extends TestCase
     }
 
     public function testError() {
-        $mock = m::mock('overload:App\Scaffolding\Helpers');
+        $mock = m::mock('overload:App\Adapters\Helpers');
         $mock->shouldReceive('dd')
             ->times(3);
 

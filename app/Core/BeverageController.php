@@ -4,7 +4,6 @@ namespace App\Core;
 
 use App\Exceptions\ValidationException;
 use App\Adapters\Database\DB;
-use App\Adapters\Database\SqLite;
 use App\Adapters\Request;
 use App\Adapters\Response;
 use OpenApi\Annotations as OA;

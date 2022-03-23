@@ -16,7 +16,7 @@ class RouterTest extends TestCase
     public function testGetRoute():void
     {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/get');
         } catch (Exception) {
@@ -27,7 +27,7 @@ class RouterTest extends TestCase
 
     public function testPostRoute():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/post', method: 'POST');
         } catch (Exception) {
@@ -38,7 +38,7 @@ class RouterTest extends TestCase
 
     public function testGet405():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/get', method: 'POST');
         } catch (Exception) {
@@ -49,7 +49,7 @@ class RouterTest extends TestCase
 
     public function testPost405():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/post');
         } catch (Exception) {
@@ -60,7 +60,7 @@ class RouterTest extends TestCase
 
     public function testGetRouteNotFound():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/notDefinedRoute');
         }catch (Exception) {
@@ -71,7 +71,7 @@ class RouterTest extends TestCase
 
     public function testPostRouteNotFound():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/notDefinedRoute', method: 'POST');
         } catch (Exception) {
@@ -82,7 +82,7 @@ class RouterTest extends TestCase
 
     public function testWrongRouterUsage():void {
         try {
-            $mock = m::mock('overload:App\Scaffolding\Helpers');
+            $mock = m::mock('overload:App\Adapters\Helpers');
             $mock->shouldReceive('dd')->andThrow(new Exception);
             $this->mockHTTPRequest(path: '/missmatchMethod', method: 'GET');
         } catch (Exception) {
