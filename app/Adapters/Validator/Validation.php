@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scaffolding\Validator;
+namespace App\Adapters\Validator;
 
 interface Validation
 {

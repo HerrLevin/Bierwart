@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scaffolding\Validator;
+namespace App\Adapters\Validator;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;

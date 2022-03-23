@@ -5,7 +5,7 @@ namespace Unit;
 // Autoload files using the Composer autoloader.
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use App\Scaffolding\Router;
+use App\Adapters\Router;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Mockery as m;

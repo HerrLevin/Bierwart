@@ -3,10 +3,10 @@
 namespace App\Core;
 
 use App\Exceptions\ValidationException;
-use App\Scaffolding\Database\DB;
-use App\Scaffolding\Database\SqLite;
-use App\Scaffolding\Request;
-use App\Scaffolding\Response;
+use App\Adapters\Database\DB;
+use App\Adapters\Database\SqLite;
+use App\Adapters\Request;
+use App\Adapters\Response;
 use OpenApi\Annotations as OA;
 
 class BeverageController

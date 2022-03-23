@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Scaffolding\Validator;
+namespace App\Adapters\Validator;
 
 use App\Exceptions\ValidationException;
 
-class RuleInteger implements Validation
+class RuleNullable implements Validation
 {
 
     /**
@@ -12,10 +12,10 @@ class RuleInteger implements Validation
      */
     public function validate($key, $value)
     {
-        if (is_int($value) || empty($value)) {
+        if (empty($value)) {
             return true;
         }
 
-        throw new ValidationException("integer", $key, $value);
+        throw new ValidationException("nullable", $key, $value);
     }
 }

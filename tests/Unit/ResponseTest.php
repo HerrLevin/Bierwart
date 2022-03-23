@@ -6,8 +6,8 @@ namespace Unit;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 
-use App\Scaffolding\FileGetContentsWrapper;
-use App\Scaffolding\Response;
+use App\Adapters\FileGetContentsWrapper;
+use App\Adapters\Response;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;

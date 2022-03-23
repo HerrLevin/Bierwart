@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scaffolding\Database;
+namespace App\Adapters\Database;
 
 use App\Config;
 use App\Exceptions\DBException;

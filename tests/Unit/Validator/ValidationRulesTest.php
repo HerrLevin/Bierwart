@@ -6,7 +6,7 @@ namespace Unit\Validator;
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Exceptions\ValidationException;
-use App\Scaffolding\Validator\Validator;
+use App\Adapters\Validator\Validator;
 use PHPUnit\Framework\TestCase;
 
 class ValidationRulesTest extends TestCase

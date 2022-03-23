@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Scaffolding;
+namespace App\Adapters;
 
 
 use Error;

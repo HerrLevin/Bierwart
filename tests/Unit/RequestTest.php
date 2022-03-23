@@ -6,7 +6,7 @@ namespace Unit;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Exceptions\NotFoundException;
-use App\Scaffolding\Request;
+use App\Adapters\Request;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase

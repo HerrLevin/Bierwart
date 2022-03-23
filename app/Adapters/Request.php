@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Scaffolding;
+namespace App\Adapters;
 
 use App\Exceptions\NotFoundException;
-use App\Scaffolding\Validator\Validator;
+use App\Adapters\Validator\Validator;
 
 class Request
 {

@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Scaffolding\Response;
+use App\Adapters\Response;
 
 class ReportsController
 {

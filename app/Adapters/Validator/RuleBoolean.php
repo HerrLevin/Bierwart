@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Scaffolding\Validator;
+namespace App\Adapters\Validator;
 
 use App\Exceptions\ValidationException;
 
-class RuleNumeric implements Validation
+class RuleBoolean implements Validation
 {
 
     /**
@@ -12,10 +12,10 @@ class RuleNumeric implements Validation
      */
     public function validate($key, $value)
     {
-        if (is_numeric($value) || empty($value)) {
+        if (is_bool($value) || empty($value)) {
             return true;
         }
 
-        throw new ValidationException("numeric", $key, $value);
+        throw new ValidationException("integer", $key, $value);
     }
 }

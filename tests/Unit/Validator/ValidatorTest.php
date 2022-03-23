@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
-use App\Scaffolding\Validator\Validator;
+use App\Adapters\Validator\Validator;
 use PHPUnit\Framework\TestCase;
 
 class ValidatorTest extends TestCase
