@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Plugins\Database;
+namespace App\Adapters\Database;
 
 
-use App\Adapters\Database\Database;
+use App\Plugins\Database\SqLite;
 
-class DB implements Database
+class DB
 {
     public static function table(string $name): SqLite
     {

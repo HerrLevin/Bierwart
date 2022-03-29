@@ -2,11 +2,11 @@
 
 namespace App\Adapters\Controllers;
 
+use App\Adapters\Database\DB;
 use App\Adapters\Request;
 use App\Adapters\Response;
 use App\Core\UserControllerInterface;
 use App\Exceptions\ValidationException;
-use App\Plugins\Database\DB;
 use OpenApi\Annotations as OA;
 
 class UserController implements UserControllerInterface
