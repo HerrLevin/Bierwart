@@ -2,11 +2,11 @@
 
 namespace App\Adapters\Controllers;
 
-use App\Adapters\Database\DB;
 use App\Adapters\Request;
 use App\Adapters\Response;
 use App\Core\BeverageControllerInterface;
 use App\Exceptions\ValidationException;
+use App\Plugins\Database\DB;
 use OpenApi\Annotations as OA;
 
 class BeverageController implements BeverageControllerInterface

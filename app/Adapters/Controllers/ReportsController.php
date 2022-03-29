@@ -3,7 +3,6 @@
 namespace App\Adapters\Controllers;
 
 use App\Adapters\Response;
-use App\Core\AccountController;
 use App\Core\ReportsControllerInterface;
 
 class ReportsController implements ReportsControllerInterface
