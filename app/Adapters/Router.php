@@ -14,22 +14,16 @@ class Router
     protected string $file;
     protected string $method;
     protected string $httpMethod;
-    private string $request;
 
-    public function __construct($request, $json=true)
+    public function __construct(private string $request, bool $json=true)
     {
         if ($json) {
             header('Content-Type: application/json');
         }
-
-        $this->request = $request;
     }
 
     /**
      * HTTP GET routes
-     * @param string $route
-     * @param string $file
-     * @param string $method
      */
     public function get(string $route, string $file, string $method): void
     {
@@ -75,7 +69,6 @@ class Router
 
     /**
      * Default "catch if no route", also handles all possible (error) return types with {"message": "foobar"} format
-     * @param int $code
      * @param string|null $message
      */
     #[NoReturn] public static function abort(int $code = 404, string $message = null): void

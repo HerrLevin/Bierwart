@@ -36,9 +36,7 @@ class ResponseTest extends TestCase
         Response::json(null);
 
         $this->expectOutputString(
-            '{"data":null}' .
-            '{"data":"Hello World!"}' .
-            '{"data":{"foo":"bar"}}'
+            '{"data":null}{"data":"Hello World!"}{"data":{"foo":"bar"}}'
         );
 
         $this->assertSame(200, http_response_code());

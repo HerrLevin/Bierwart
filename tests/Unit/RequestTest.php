@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {
-    private $jsonData = '{"key": "value", "int": 123, "float": 3.14, "bool": true, "nulled": null}';
+    private string $jsonData = '{"key": "value", "int": 123, "float": 3.14, "bool": true, "nulled": null}';
     private $data = 'This is beautiful body data!';
 
     public function testBody()
@@ -30,7 +30,7 @@ class RequestTest extends TestCase
         $json = $request->getJsonBody();
         var_dump($json);
         $this->assertIsArray($json);
-        $this->assertEquals(json_decode($this->jsonData, true), $json);
+        $this->assertEquals(json_decode($this->jsonData, true, 512, JSON_THROW_ON_ERROR), $json);
     }
 
     public function testFailJsonBody() {
