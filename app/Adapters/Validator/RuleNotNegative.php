@@ -10,7 +10,7 @@ class RuleNotNegative implements Validation
     /**
      * @throws ValidationException
      */
-    public function validate($key, $value)
+    public function validate(string $key, string $value): bool
     {
         if ($value >= 0 || empty($value)) {
             return true;

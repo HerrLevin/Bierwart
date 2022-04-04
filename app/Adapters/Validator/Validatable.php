@@ -4,12 +4,11 @@ namespace App\Adapters\Validator;
 
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
+use JetBrains\PhpStorm\Pure;
 
 class Validatable
 {
-    protected $key;
-    protected $ruleset;
-    protected $value;
+    protected array $ruleset;
     protected array $registeredRulesets = [
         'required' => RuleRequired::class,
         'numeric' => RuleNumeric::class,
@@ -20,14 +19,12 @@ class Validatable
         'nullable' => RuleNullable::class
     ];
 
-    public function __construct($key, $value, $ruleset)
+    #[Pure] public function __construct(protected string $key, protected string $value, string $ruleset)
     {
-        $this->ruleset = $this->getRules($ruleset);
-        $this->key = $key;
-        $this->value = $value;
+        $this->ruleset = $this->getRules(ruleset: $ruleset);
     }
 
-    private function getRules($ruleset): array
+    private function getRules(string $ruleset): array
     {
         return explode("|", $ruleset);
     }

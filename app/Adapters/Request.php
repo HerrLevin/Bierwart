@@ -82,7 +82,7 @@ class Request
     public function validate(array $rules): void
     {
         $this->prepareJsonBody();
-        $validator = new Validator($rules, $this->getJsonBody());
+        $validator = new Validator(rules: $rules, data: $this->getJsonBody());
         $validator->validate();
         $this->validated = array_intersect_key($this->getJsonBody(), array_flip(array_keys($rules)));
     }
