@@ -30,7 +30,7 @@ class ResponseTest extends TestCase
 
     public function testJson() {
         $mock = m::mock('overload:App\Adapters\Helpers');
-        $mock->shouldReceive('dd')
+        $mock->shouldReceive('dd', 'setHeader')
             ->times(3);
 
         Response::json(null);
@@ -51,7 +51,7 @@ class ResponseTest extends TestCase
 
     public function testError() {
         $mock = m::mock('overload:App\Adapters\Helpers');
-        $mock->shouldReceive('dd')
+        $mock->shouldReceive('dd', 'setHeader')
             ->times(3);
 
         $this->expectOutputString(

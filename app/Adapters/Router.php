@@ -16,12 +16,8 @@ class Router
     protected string $httpMethod;
     private string $request;
 
-    public function __construct($request, $json=true)
+    public function __construct($request)
     {
-        if ($json) {
-            header('Content-Type: application/json');
-        }
-
         $this->request = $request;
     }
 
