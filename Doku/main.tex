@@ -286,7 +286,13 @@ $class->validate($this->key, $this->value);
     Hierbei wurden ebenfalls alle private/protected Klassenvariablen aufgerufen.
     Somit können in einem einzelnen Aufruf fast alle Methoden innerhalb der Klasse aufgerufen werden.
 
-
+    \subsubsection{Low Coupling}
+    Die Kopplung ist ein Maß für die Abhängigkeit einer Klasse von ihrer Umgebung.
+    Hierbei ist eine geringe Kopplung zu erstrebenswert.
+    Die Klasse \verb|Router| schätzen wir als gering bis moderat gekoppelt ein.
+    Zwar besitzt sie einige Abhängigkeiten nach Außen durch \verb|Helpers::dd()|, diese ist aber lediglich ein Wrapper um die PHP-eigene `exit()`-Methode, um eine bessere Testbarkeit zu erreichen. (Siehe \ref{sec:refactoring})
+    Ein weiterer Gesichtspunkt der Kopplung wäre der dynamische Methodenaufruf durch einen Übergabeparameter von außen.
+    Dies sehen wir nicht als tatsächliche Abhängigkeit, da es einem return-Wert gleicht und keine statische Abhängigkeit innerhalb der Klasse darstellt.
     
     \subsection{DRY -- Don't Repeat Yourself}
     \label{subsec:dry}
