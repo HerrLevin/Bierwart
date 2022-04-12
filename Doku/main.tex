@@ -199,7 +199,7 @@ try {
     Deshalb haben wir das \href{https://refactoring.guru/extract-method}{Extract Method}-Vorgehen angewandt:
     Wir haben das Code-Fragment aus der \verb|get|-Methode genommen und in eine Methode namens \verb|matchURI|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/c12433032105870627052b8f2e66d6ea43be4833/app/Scaffolding/Router.php#L54-L66}} verschoben.
     Auf diese wird von der Methode \verb|scaffoldRequest| zugegriffen, welche sowohl von \verb|get| als auch \verb|post| aufgerufen wird.
-    Somit konnten wir den Code Smell \href{https://refactoring.guru/smells/duplicate-code}{Duplicate Code} vermeiden.
+    Somit konnten wir den Codesmell \href{https://refactoring.guru/smells/duplicate-code}{Duplicate Code} vermeiden.
 
     \section{Unit Tests}
     Im Ordner \verb|tests| bzw. \verb|tests/Unit| befinden sich alle unsere derzeitigen (Unit-)Tests.
