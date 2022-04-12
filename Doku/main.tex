@@ -246,6 +246,13 @@ try {
     \subsection{GRASP}
     \label{subsec:grasp}
     
-    \subsection{DRY}
+    \subsection{DRY -- Don't Repeat Yourself}
     \label{subsec:dry}
+    Das Motto für DRY wird von uns versucht, so gut es geht einzuhalten.
+    Bas beste Beispiel hierfür ist mal wieder der Validator, bzw. die Validation(s), da hier eine fixe logik-Quelle vorherrst und die einzelnen Rules diese erweitern.
+    Hier erweitern alle einzelnen Regeln das Interface \verb|Validation|.
+    Somit sind diese direkt hiervon abhängig.
+    Somit gibt es keine Wiederholungen mit der Erzeugung diverser Funktionalitäten.
+
+
 \end{document}
