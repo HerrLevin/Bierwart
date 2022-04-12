@@ -7,16 +7,8 @@ use Throwable;
 
 class ValidationException extends Exception
 {
-    protected $key;
-    protected $content;
-    protected $rule;
-
-    public function __construct($rule, $key, $content, $code = 0, Throwable $previous = null)
+    public function __construct(protected $rule, protected $key, protected $content, $code = 0, Throwable $previous = null)
     {
-        $this->key = $key;
-        $this->content = $content;
-        $this->rule = $rule;
-
         $message = "'" . $this->key."' did not conform to the validation rule '". $this->rule ."'. Content: " . var_export($this->content, true);
 
         parent::__construct($message, $code, $previous);

@@ -4,5 +4,5 @@ namespace App\Adapters\Validator;
 
 interface Validation
 {
-    public function validate($key, $value);
+    public function validate(string $key, string $value): bool;
 }

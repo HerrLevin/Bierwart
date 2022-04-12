@@ -10,7 +10,7 @@ class RuleBoolean implements Validation
     /**
      * @throws ValidationException
      */
-    public function validate($key, $value)
+    public function validate(string $key, string $value): bool
     {
         if (is_bool($value) || empty($value)) {
             return true;
