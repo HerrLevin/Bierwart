@@ -64,7 +64,7 @@
         %\includegraphics[width=0.15\textwidth]{pic/picsim_logo_full.png}\par\vspace{1cm}
         {\scshape\LARGE Duale Hochschule Baden-Württemberg \par}
         \vspace{1cm}
-        {\scshape\Large Dokumentation\par}
+        {\scshape\Large Advanced Software Engineering 2 \\--\\ Dokumentation\par}
         \vspace{1.5cm}
         {\huge\bfseries Bierwart\par}
         \vspace{2cm}
@@ -85,6 +85,7 @@
     \pagenumbering{Roman}
     \tableofcontents
     \listoffigures
+    \lstlistoflistings
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%  Acronym  %%%%%%%%%%%%%%%%%
@@ -96,12 +97,6 @@
         \acro{api}[API]{Application Programming Interface}
     \end{acronym}
     \onehalfspacing
-
-
-    \chapter{Einleitung}\label{ch:einleitung}
-    \pagenumbering{arabic}
-    Lorem Ipsum, blah blah blah
-
 
     \chapter{Projektbeschreibung}\label{ch:projektbeschreibung}
     Der Bierwart, im Rahmen dieser Abgabe, ist eine reine \ac{rest}-\ac{api}. Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}.
@@ -153,7 +148,7 @@
 
     Diese konnten wir sowohl in unseren Tests abfangen, als auch in unserer \verb|index.php|:
 
-    \begin{lstlisting}[language=php,label={lst:lstlisting}]
+    \begin{lstlisting}[language=php,label={lst:lstlisting},caption={Ursprüngliche Implementation der Router-Exception}]
 $request = $_SERVER['REQUEST_URI'];
 $router = new Router($request);
 try {
@@ -195,9 +190,9 @@ try {
     
     \subsection{Extract Method -- The return of the router}\label{subsec:extract}
     Wir sind super gute Programmierer, deshalb machen wir unser Refactoring direkt während der Entwicklung!
-    Um unseren Router um eine HTTP POST-Methode zu erweitern, liefen wir Gefahr einer Code-Dopplung, da wir unser Routen-Matching in einer Methode namens \verb|get(...)|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/bbe4c7e53097f7ca68489a66be96bda4d2fdcc7a/app/Scaffolding/Router.php#L41-L60}} behandelten.
+    Um unseren Router um eine HTTP POST-Methode zu erweitern, liefen wir Gefahr einer Code-Dopplung, da wir unser Routen-Matching in einer Methode namens \verb|get(...)|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/bbe4c7e53097f7ca68489a66be96bda4d2fdcc7a/app/Scaffolding/Router.php\#L41-L60}} behandelten.
     Deshalb haben wir das \href{https://refactoring.guru/extract-method}{Extract Method}-Vorgehen angewandt:
-    Wir haben das Code-Fragment aus der \verb|get|-Methode genommen und in eine Methode namens \verb|matchURI|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/c12433032105870627052b8f2e66d6ea43be4833/app/Scaffolding/Router.php#L54-L66}} verschoben.
+    Wir haben das Code-Fragment aus der \verb|get|-Methode genommen und in eine Methode namens \verb|matchURI|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/c12433032105870627052b8f2e66d6ea43be4833/app/Scaffolding/Router.php\#L54-L66}} verschoben.
     Auf diese wird von der Methode \verb|scaffoldRequest| zugegriffen, welche sowohl von \verb|get| als auch \verb|post| aufgerufen wird.
     Somit konnten wir den Codesmell \href{https://refactoring.guru/smells/duplicate-code}{Duplicate Code} vermeiden.
 
@@ -211,7 +206,7 @@ try {
     Dafür nutzen wir Mock-Objekte mit dem Framework Mockery\footnote{\url{https://github.com/mockery/mockery}} an mehreren Stellen.
 
     Ein Beispiel hierfür (gekürzt):
-    \begin{lstlisting}[language=php,label={lst:mockery},escapechar=\%]
+    \begin{lstlisting}[language=php,label={lst:mockery},escapechar=\%,caption={Einsatz von Mockery}]
     public function testError() {
         $mock = m::mock('overload:App\Adapters\Helpers');
         $mock->shouldReceive('dd', 'setHeader')
@@ -226,8 +221,7 @@ try {
 
         Response::error(status: 500);
         $this->assertSame(500, http_response_code());
-    }
-    \end{lstlisting}
+    }\end{lstlisting}
 
     Das Framework wird in Zeile 2 initialisiert und überlädt die gesamte Klasse \verb|Helpers|.
     In Zeilen 3\&4 wird definiert, dass die Methoden \verb|dd| und \verb|setHeader| jeweils dreimal ausgeführt werden sollen.
@@ -246,7 +240,7 @@ try {
     Diese Systemressource lässt sich nur durch einen User-Input aufrufen, was gegen das A in ATRIP verstößst.
 
     \subsubsection{Repeatable}
-    Unsere Tests sind durchweg, sofern nötig, mit fixen Beispieldaten bestückt (siehe RouterTest.php, Zeile 101\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/0672b0252282052d904551d00f55c35b2464d27e/tests/Unit/RouterTest.php#L101-L110}}).
+    Unsere Tests sind durchweg, sofern nötig, mit fixen Beispieldaten bestückt (siehe RouterTest.php, Zeile 101\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/0672b0252282052d904551d00f55c35b2464d27e/tests/Unit/RouterTest.php\#L101-L110}}).
     Dadurch sind sie im Fall eines funktinsfähigen Codes jederzeit auf egal welchem System mit demselben Ergebnis durchführbar.
 
     \subsubsection{Independent}
@@ -272,13 +266,12 @@ try {
     Das Regelset des \verb|Validators| kann leicht erweitert werden. Dazu muss lediglich eine Klasse erzeugt werden, welche das \verb|Validaton| Interface implementiert und im \verb|registeredRuleset| der \verb|Validatable| Klasse eingetragen werden. Der \verb|Validator| selbst muss bei einer geänderten Anforderung nicht geändert werden.
     \subsubsection{Liskov substitution principle}
     Das LSP ist erfüllt, da der Aufruf der Generalisierung durch jede Spezialisierung ersetzen kann. Zum Beispiel in der \verb|Validatable| Klasse:
-    \begin{lstlisting}[language=php,label={lst:lsp},escapechar=\%]
+    \begin{lstlisting}[language=php,label={lst:lsp},escapechar=\%,caption={Beispiel Liskov substitution principle}]
 foreach ($this->ruleset as $rule) {
-$classname = $this->getRule($rule);
-$class = new $classname();
-$class->validate($this->key, $this->value);
-}
-    \end{lstlisting}
+    $classname = $this->getRule($rule);
+    $class = new $classname();
+    $class->validate($this->key, $this->value);
+}\end{lstlisting}
 	Ersetzt man den Polymorphismus, welcher die gesuchte Validierung sucht, durch irgendeine bestimmte Regel, erhält man immer eine gültige Antwort.
     \subsubsection{Interface segregation principle}
     Das \verb|Validator| Interface ist spezifisch für die Validierung eines key:value Arrays (wie bei JSON) zugeschnitten. Es benötigt keine weiteren Informationen und unterstützt auch keine anderen Funktionen. Die Validierung ist für die Überprüfung eines JSON Inputs damit passgenau zugeschnitten. 
@@ -305,10 +298,44 @@ $class->validate($this->key, $this->value);
     \subsection{DRY -- Don't Repeat Yourself}
     \label{subsec:dry}
     Das Motto für DRY wird von uns versucht, so gut es geht einzuhalten.
-    Bas beste Beispiel hierfür ist mal wieder der Validator, bzw. die Validation(s), da hier eine fixe logik-Quelle vorherrst und die einzelnen Rules diese erweitern.
+    Bas beste Beispiel hierfür ist erneut der Validator, bzw. die Validation(s), da hier eine fixe logik-Quelle vorherrst und die einzelnen Rules diese erweitern.
     Hier erweitern alle einzelnen Regeln das Interface \verb|Validation|.
     Somit sind diese direkt hiervon abhängig.
     Somit gibt es keine Wiederholungen mit der Erzeugung diverser Funktionalitäten.
     Ebenso nutzen wir durch die Klassen \verb|Request| und \verb|Response| das DRY-Prinzip, da wir hierdurch (wie der Name schon sagt) die Requests und Responses abbilden.
     Somit ist bspw. bei der Response das Format der Antwort genau gegeben und wird nicht an jeder einzelnen Rückgabestelle durch bspw. ein individuelles \verb|echo| ausgegeben.
+
+    \section{Entwurfsmuster}\label{sec:Entwurfsmuster}
+    In unserem Programmentwurf haben wir das Entwurfsmuster der sog. \textit{Chain of Responsibility} bzw. \href{https://de.wikipedia.org/wiki/Zust%C3%A4ndigkeitskette}{Zuständigkeitskette} genutzt.
+    Diese haben wir in unserem all-time-favorite-Beispiel, dem Validator umgesetzt.
+    Hierbei werden mehrere Objekte, hier \textit{Rules}, hintereinantergeschaltet, bis entweder die erste fehlschlägt und eine Exception wirft, oder der Validator erfolgreich durchläuft.
+
+    \begin{lstlisting}[language=php,label={lst:validator},escapechar=\%,caption={Beispiel Zuständigkeitskette - Code-Ausschnitt aus AccountController.php}]
+$request = new Request();
+try {
+    $request->validate(rules: [
+        'owner' => 'required|integer|notnegative',
+        'deposit' => 'integer'
+    ]);
+} catch (ValidationException $exception) {
+    Response::error(message: $exception->getMessage(), status: 400);
+}
+    \end{lstlisting}
+
+    In Listing \ref{lst:validator} wird ein Validator für einen Request erzeugt, der zwei Felder auf mehrere Regeln validieren soll.
+    Wir beziehen uns im Folgenden auf den Wert \verb|owner|.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.75\linewidth]{COR.drawio}
+        \caption{graphische Darstellung der Zuständigkeitskette anhand Listing \ref{lst:validator}}
+        \label{fig:cor}
+    \end{figure}
+
+    Da sich Abb. \ref{fig:cor} direkt auf das Beispiel aus Lst. \ref{lst:validator} bezieht, ist das UML etwas umfangreicher, als die eigentliche Zuständigkeitskette.
+    Diese beginnt nämlich erst ab dem Validator selbst.
+    Somit werden in \verb|Validatable| die Regeln required, integer und notnegative abgearbeitet.
+    Wir nutzen dieses Entwurfsmuster, da eine Validierung von (User-)Input ein sehr repetetiver Vorgang ist.
+    Eine Einstiegsklasse als \textit{handler}, welche die einzelnen Regeln abarbeitet erleichtert den Programmieraufand und reduziert die Komplexität des Codes.
+    Somit muss bei einer künftigen Erweiterung um weitere Regeln lediglich eine neue Regel-Klasse angelegt werden, welche in \verb|$registeredRulesets| der \verb|Validatable|-Klasse registriert werden müssen.
 \end{document}
