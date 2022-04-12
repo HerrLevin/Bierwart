@@ -169,11 +169,72 @@ try {
     Deshalb haben wir die ungewöhnlichere und technisch teurere Funktionalität der Exception ausgetauscht durch \verb|dd()|.\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/20e8c915281df7b791abdbded9d593fbce22344f}}
 
     In beiden Fällen wurde hierfür das \href{https://refactoring.guru/substitute-algorithm}{Substitute Algorithm}-Prinzip zum Refactoring genutzt.
+    Zwar trifft die Art und weise des Refactorings nicht komplett auf unsere Vorgehensweise zu, aber es stimmt am ehesten damit überein:
+    Wir schreiben einen neuen \glqq Algorithmus\grqq{}, der zusätzlich in eine neue Klasse/Methode gepackt wird.
+    Dies könnte man ebenfalls mit dem \href{https://refactoring.guru/extract-method}{Extract Method}-Verfahren begründen.
 
     \subsection{DB::class}\label{subsec:db::class}
     Weil wir am Anfang nicht richtig wussten, wo wir hin gehen mit unserem Code, bauten wir eine Klasse zum Kommunizieren mit der Datenbank: \verb|DB::class|
     Da wir in einer super Vorlesung gelernt haben, dass es deutlich bessere Wege gibt, haben wir einen Query-Builder gebaut, der diese schlechte Klasse ablöst.
     Das Ganze ist ein \href{https://refactoring.guru/smells/dead-code}{Dead Code} CodeSmell, deshalb haben wir die Klasse einfach gelöscht.\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/e2c00ccf5d3e17b1c7b1a1092077cfdcd25ed68c}}
+    Dadurch schaffen wir eine übersichtlichere Codebase.
 
+    \section{Unit Tests}
+    Im Ordner \verb|tests| bzw. \verb|tests/Unit| befinden sich alle unsere derzeitigen (Unit-)Tests.
+    Es existieren \textbf{37} Tests mit \textbf{88} Assertions.
+    Die Coverage beläuft sich laut PHPUnit auf \textbf{63 \% File Coverage} und \textbf{32 \% Line Coverage}.
+
+    \subsection{Einsatz von Mocks}
+    Da gewisse von uns eingesetzte Methoden im Normalfall den aktuellen PHP-Prozess beenden (siehe \ref{subsec:router}), lassen sich diese nicht im Ausgangszustand testen.
+    Dafür nutzen wir Mock-Objekte mit dem Framework Mockery\footnote{\url{https://github.com/mockery/mockery}} an mehreren Stellen.
+
+    Ein Beispiel hierfür (gekürzt):
+    \begin{lstlisting}[language=php,label={lst:mockery},escapechar=\%]
+    public function testError() {
+        $mock = m::mock('overload:App\Adapters\Helpers');
+        $mock->shouldReceive('dd', 'setHeader')
+        ->times(3);
+
+        %\colorbox{yellow!30}{$\ldots$}%
+
+        Response::error();
+        $this->assertSame(404, http_response_code());
+
+        Response::error("This is an error!");
+
+        Response::error(status: 500);
+        $this->assertSame(500, http_response_code());
+    }
+    \end{lstlisting}
+
+    Das Framework wird in Zeile 2 initialisiert und überlädt die gesamte Klasse \verb|Helpers|.
+    In Zeilen 3\&4 wird definiert, dass die Methoden \verb|dd| und \verb|setHeader| jeweils dreimal ausgeführt werden sollen.
+    Bei dem jeweiligen Methodenaufruf passiert jedoch nichts, außer dass Mockery selbst einen Aufruf empfängt und den internen Counter hochzählt.
+
+    \subsection{ATRIP-Regeln}
+    \label{subsec:atrip-regeln}
+
+    \subsubsection{Automatic}
+    Sobald in PHPStorm \textit{Run All Tests} angeklickt wurde, laufen alle Tests vollautomatisch durch und berichten am Ende entweder \textbf{OK!} oder \textbf{FAILURES!} zurück.
+    Ebenfalls lässt sich dies über den Konsolenbefehl \verb| vendor/bin/phpunit ./tests| im Hauptverzeichnis des Projekts ausführen.
+
+    \subsubsection{Thorough}
+    Unsere wichtigsten Funktionalitäten testen wir in den Klassen \verb|Request|, \verb|Response| und \verb|Router|, da diese für die grundlegenden Funktionalitäten eines Seitenaufrufs zuständig sind.
+    Alle Klassen besitzen 100 \% Coverage in diversen Erfolgs- und Fehlerszenarien. Lediglich \verb|Request| besitzt nur 96 \% line coverage, da hier auf eine Systemressource zugegriffen wird.
+    Diese Systemressource lässt sich nur durch einen User-Input aufrufen, was gegen das A in ATRIP verstößst.
+
+    \subsubsection{Repeatable}
+    Unsere Tests sind durchweg, sofern nötig, mit fixen Beispieldaten bestückt (siehe RouterTest.php, Zeile 101\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/0672b0252282052d904551d00f55c35b2464d27e/tests/Unit/RouterTest.php#L101-L110}}).
+    Dadurch sind sie im Fall eines funktinsfähigen Codes jederzeit auf egal welchem System mit demselben Ergebnis durchführbar.
+
+    \subsubsection{Independent}
+    Unsere Tests bauen nicht aufeinander auf.
+    Falls ein Programmablauf getestet werden soll, passiert dies nur innerhalb einer einzigen Testmethode.
+    Somit können sie jederzeit in beliebiger Zusammenstellung und Reihenfolge funktionsfähig sein.
+
+    \subsubsection{Professional}
+    Unsere Testmethodennamen sind selbsterklärend; Bsp: \verb|RequestTest()->testMissingBodyParams|.
+    Dadurch wird die Absicht des Tests direkt klar und ist leichter verständlich.
+    Unsere Tests sind so kurz wie möglich gehalten, was die Verständlichkeit auch erhöht.
 
 \end{document}
