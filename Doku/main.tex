@@ -278,6 +278,15 @@ $class->validate($this->key, $this->value);
     Spezifische Regeln sind von der Abstraktion, dem Interface \verb|Validation|, abhängig. Bei Änderungen im niedrigen Modul ist keine Änderung im höheren Modul nötig. Eine Flexible Erweiterung ist damit gegeben.
     \subsection{GRASP}
     \label{subsec:grasp}
+
+    \subsubsection{High Cohesion}
+    Die Kohäsion steht für den inneren Zusammenhalt einer Klasse, also wie \glqq eng\grqq{} die Methoden miteinander zusammenarbeiten.
+    Ein gutes Beispiel für hohe Kohäsion ist unsere \verb|Router|-Klasse, da die Methoden innerhalb der Klasse sehr eng zusammenarbeiten:
+    Im Falle eines POST/GET-Aufrufs wird innerhalb zunächst die Methode \verb|scaffoldRequest()| aufgerufen, diese ruft \verb|matchURI(...)| auf, welche im Fehlerfall noch zusätzlich \verb|abort(...)| aufruft.
+    Hierbei wurden ebenfalls alle private/protected Klassenvariablen aufgerufen.
+    Somit können in einem einzelnen Aufruf fast alle Methoden innerhalb der Klasse aufgerufen werden.
+
+
     
     \subsection{DRY -- Don't Repeat Yourself}
     \label{subsec:dry}
@@ -288,6 +297,4 @@ $class->validate($this->key, $this->value);
     Somit gibt es keine Wiederholungen mit der Erzeugung diverser Funktionalitäten.
     Ebenso nutzen wir durch die Klassen \verb|Request| und \verb|Response| das DRY-Prinzip, da wir hierdurch (wie der Name schon sagt) die Requests und Responses abbilden.
     Somit ist bspw. bei der Response das Format der Antwort genau gegeben und wird nicht an jeder einzelnen Rückgabestelle durch bspw. ein individuelles \verb|echo| ausgegeben.
-
-
 \end{document}
