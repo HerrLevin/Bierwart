@@ -52,10 +52,10 @@ class Helpers
         $c = preg_replace("/(int|float)\(([0-9\.]+)\)/i", "$1() <span class=\"number\">$2</span>", $c);
 
         // Syntax Highlighting of Strings. This seems cryptic, but it will also allow non-terminated strings to get parsed.
-        $c = preg_replace("/(\[[\w ]+\] = string\([0-9]+\) )\"(.*?)/sim", "$1<span class=\"string\">\"", $c);
+        $c = preg_replace("/(\\[[\\w ]+\\] = string\\(\\d+\\) )\"(.*?)/sim", "$1<span class=\"string\">\"", $c);
         $c = preg_replace("/(\"\n{1,})( {0,}\})/sim", "$1</span>$2", $c);
         $c = preg_replace("/(\"\n{1,})( {0,}\[)/sim", "$1</span>$2", $c);
-        $c = preg_replace("/(string\([0-9]+\) )\"(.*?)\"\n/sim", "$1<span class=\"string\">\"$2\"</span>\n", $c);
+        $c = preg_replace("/(string\\(\\d+\\) )\"(.*?)\"\n/sim", "$1<span class=\"string\">\"$2\"</span>\n", $c);
 
         $regex = array(
             // Numberrs
@@ -121,11 +121,7 @@ class Helpers
         $c = trim($c);
         $c = preg_replace("/\n<\/span>/", "</span>\n", $c);
 
-        if ($label == ''){
-            $line1 = '';
-        } else {
-            $line1 = "<strong>$label</strong> \n";
-        }
+        $line1 = $label == '' ? '' : "<strong>$label</strong> \n";
 
         $out = "\n<!-- Dumpr Begin -->\n".
             "<style type=\"text/css\">".$style."</style>\n".

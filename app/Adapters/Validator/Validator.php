@@ -2,29 +2,28 @@
 
 namespace App\Adapters\Validator;
 
+use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
+
 class Validator
 {
-    protected array $rulesArray;
-    protected array $data;
 
-    public function __construct(array $rules, array $data) {
-        $this->rulesArray = $rules;
-        $this->data = $data;
+    public function __construct(protected array $rules, protected array $data) {
     }
 
     /**
-     * @throws \App\Exceptions\ValidationException
-     * @throws \App\Exceptions\NotFoundException
+     * @throws ValidationException
+     * @throws NotFoundException
      */
     public function validate(): void
     {
-        foreach ($this->rulesArray as $key => $ruleset) {
-            $validatable = new Validatable($key, $this->getValidatableContent($key), $ruleset);
+        foreach ($this->rules as $key => $ruleset) {
+            $validatable = new Validatable(key: $key, value: $this->getValidatableContent($key), ruleset: $ruleset);
             $validatable->validateRules();
         }
     }
 
-    private function getValidatableContent($key) {
+    private function getValidatableContent(string $key): string {
         return $this->data[$key] ?? "";
     }
 }
