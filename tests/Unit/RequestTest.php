@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Exceptions\NotFoundException;
 use App\Adapters\Request;
 use PHPUnit\Framework\TestCase;
+use Mockery as m;
 
 class RequestTest extends TestCase
 {
@@ -34,6 +35,8 @@ class RequestTest extends TestCase
     }
 
     public function testFailJsonBody() {
+        $mock = m::mock('overload:App\Adapters\Helpers');
+        $mock->shouldReceive('setHeader', 'dd');
         $request = Request::create($this->data);
         $json = $request->getJsonBody();
         $this->assertNull($json);

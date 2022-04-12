@@ -59,8 +59,8 @@ class Request
             try {
                 $this->jsonBody = json_decode(json: $this->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
             } catch (\JsonException) {
-                Response::error(status: 400, message: "Malformatted JSON");
                 $this->jsonBody = null;
+                Response::error(status: 400, message: "Malformatted JSON");
             }
         }
     }

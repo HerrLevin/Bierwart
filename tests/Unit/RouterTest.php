@@ -100,7 +100,7 @@ class RouterTest extends TestCase
 
     private function setupRoutes():void {
         $request = $_SERVER['REQUEST_URI'];
-        $router = new Router(request: $request, json: false);
+        $router = new Router(request: $request);
 
         $router->get('/get', $this::class, 'getRoute');
         $router->post('/post', $this::class, 'postRoute');

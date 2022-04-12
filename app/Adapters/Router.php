@@ -17,9 +17,6 @@ class Router
 
     public function __construct(private string $request, bool $json=true)
     {
-        if ($json) {
-            header('Content-Type: application/json');
-        }
     }
 
     /**

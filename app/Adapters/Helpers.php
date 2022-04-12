@@ -13,6 +13,11 @@ class Helpers
         exit(0);
     }
 
+    public static function setHeader(string $header, bool $replace = false): void
+    {
+        header(header: $header, replace: $replace);
+    }
+
     public static function dump(mixed $data, bool $pretty = true):void {
         if ($pretty) {
             self::var_dump_pretty($data);
