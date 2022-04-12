@@ -192,6 +192,14 @@ try {
     Da wir in einer super Vorlesung gelernt haben, dass es deutlich bessere Wege gibt, haben wir einen Query-Builder gebaut, der diese schlechte Klasse ablöst.
     Das Ganze ist ein \href{https://refactoring.guru/smells/dead-code}{Dead Code} CodeSmell, deshalb haben wir die Klasse einfach gelöscht.\footnote{\url{https://github.com/HerrLevin/Bierwart/commit/e2c00ccf5d3e17b1c7b1a1092077cfdcd25ed68c}}
     Dadurch schaffen wir eine übersichtlichere Codebase.
+    
+    \subsection{Extract Method -- The return of the router}\label{subsec:extract}
+    Wir sind super gute Programmierer, deshalb machen wir unser Refactoring direkt während der Entwicklung!
+    Um unseren Router um eine HTTP POST-Methode zu erweitern, liefen wir Gefahr einer Code-Dopplung, da wir unser Routen-Matching in einer Methode namens \verb|get(...)|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/bbe4c7e53097f7ca68489a66be96bda4d2fdcc7a/app/Scaffolding/Router.php#L41-L60}} behandelten.
+    Deshalb haben wir das \href{https://refactoring.guru/extract-method}{Extract Method}-Vorgehen angewandt:
+    Wir haben das Code-Fragment aus der \verb|get|-Methode genommen und in eine Methode namens \verb|matchURI|\footnote{\url{https://github.com/HerrLevin/Bierwart/blob/c12433032105870627052b8f2e66d6ea43be4833/app/Scaffolding/Router.php#L54-L66}} verschoben.
+    Auf diese wird von der Methode \verb|scaffoldRequest| zugegriffen, welche sowohl von \verb|get| als auch \verb|post| aufgerufen wird.
+    Somit konnten wir den Code Smell \href{https://refactoring.guru/smells/duplicate-code}{Duplicate Code} vermeiden.
 
     \section{Unit Tests}
     Im Ordner \verb|tests| bzw. \verb|tests/Unit| befinden sich alle unsere derzeitigen (Unit-)Tests.
