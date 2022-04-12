@@ -242,7 +242,26 @@ try {
 
     \subsection{SOLID}
     \label{subsec:solid}
+    Als Beispiel für die Umsetzung der SOLID Prinzipien wird unser \verb|Validator| verwendet. Er dient zur Validierung von JSON-Inputs.
     
+    \subsubsection{Single responsibility principle}
+    Unser Validator hat für jede Regel, nach welcher validiert werden kann, eine eigene Klasse. Ändert sich die Validierung einer Regel, muss lediglich diese eine klasse angepasst werden. Das Prinzip der \textit{single responsibility} ist damit erfüllt.
+    \subsubsection{Open/Closed principle}
+    Das Regelset des \verb|Validators| kann leicht erweitert werden. Dazu muss lediglich eine Klasse erzeugt werden, welche das \verb|Validaton| Interface implementiert und im \verb|registeredRuleset| der \verb|Validatable| Klasse eingetragen werden. Der \verb|Validator| selbst muss bei einer geänderten Anforderung nicht geändert werden.
+    \subsubsection{Liskov substitution principle}
+    Das LSP ist erfüllt, da der Aufruf der Generalisierung durch jede Spezialisierung ersetzen kann. Zum Beispiel in der \verb|Validatable| Klasse:
+    \begin{lstlisting}[language=php,label={lst:lsp},escapechar=\%]
+foreach ($this->ruleset as $rule) {
+$classname = $this->getRule($rule);
+$class = new $classname();
+$class->validate($this->key, $this->value);
+}
+    \end{lstlisting}
+	Ersetzt man den Polymorphismus, welcher die gesuchte Validierung sucht, durch irgendeine bestimmte Regel, erhält man immer eine gültige Antwort.
+    \subsubsection{Interface segregation principle}
+    Das \verb|Validator| Interface ist spezifisch für die Validierung eines key:value Arrays (wie bei JSON) zugeschnitten. Es benötigt keine weiteren Informationen und unterstützt auch keine anderen Funktionen. Die Validierung ist für die Überprüfung eines JSON Inputs damit passgenau zugeschnitten. 
+    \subsubsection{Dependency inversion principle}
+    Spezifische Regeln sind von der Abstraktion, dem Interface \verb|Validation|, abhängig. Bei Änderungen im niedrigen Modul ist keine Änderung im höheren Modul nötig. Eine Flexible Erweiterung ist damit gegeben.
     \subsection{GRASP}
     \label{subsec:grasp}
     
