@@ -286,6 +286,8 @@ $class->validate($this->key, $this->value);
     Hier erweitern alle einzelnen Regeln das Interface \verb|Validation|.
     Somit sind diese direkt hiervon abhängig.
     Somit gibt es keine Wiederholungen mit der Erzeugung diverser Funktionalitäten.
+    Ebenso nutzen wir durch die Klassen \verb|Request| und \verb|Response| das DRY-Prinzip, da wir hierdurch (wie der Name schon sagt) die Requests und Responses abbilden.
+    Somit ist bspw. bei der Response das Format der Antwort genau gegeben und wird nicht an jeder einzelnen Rückgabestelle durch bspw. ein individuelles \verb|echo| ausgegeben.
 
 
 \end{document}
