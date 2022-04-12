@@ -127,6 +127,20 @@
     \chapter{Entwicklung}\label{ch:entwicklung}
     %Idk, was hier alles rein soll
 
+    Für unsere Clean Architecture haben wir drei Schichten geplant.
+    Die innerste Schicht mit dem unvorhersehbaren Namen \verb|Core| ist vergleichbar mit der Schicht 2 (Application Code).
+    Sie enthält unsere Use Cases, welche sich hinter den Interfaces einzelner Controller finden.
+    Wir sind der Meinung eine Getränkeabrechnung wird die von uns implementierten Use Cases immer benötigen und eine Änderung an diesen ist höchst unwahrscheinlich.
+    Die Controller dienen hierbei der Übersichtlichkeit.
+    Die nächste Schicht sind unsere \verb|Adapter|.
+    Sie ist vergleichbar mit der in der Vorlesung beschriebenen Schicht 1 (Adapter).
+    Sie enthält die implementierenden Klassen der \verb|Core| Schicht, einen Validator für json Arrays, ein Query Builder Interface für eine Datenbank und die Klasse \verb|DB|, in welcher der Datenbankconnector instanziiert wird.
+    Zudem die \verb|Helpers| Klasse für unsere Testingumgebung und das dumpen sowie ein HTTP Router und die Klassen für Request und Response.
+    Bei Technologieänderungen lassen sich diese hier durchführen ohne alles wegwerfen zu müssen.
+    In dieser Schicht entkoppeln wir unseren Core von der nächsten Schicht, den \verb|Plugins|.
+    Unsere Schnittstelle nach außen ist eine REST API.
+    Auf diese weise können wir in Zukunft immer den neusten Scheiß als UI nutzen.
+    In der äußersten Schicht findet sich die Anbindung an unsere SqLite Datenbank, denn die Welt der Datenbanken ist teilweise sehr rau und wechselhaft.
 
     \section{Refactoring}\label{sec:refactoring}
 
