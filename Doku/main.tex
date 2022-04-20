@@ -87,22 +87,16 @@
     \listoffigures
     \lstlistoflistings
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%  Acronym  %%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \chapter*{Abkürzungsverzeichnis}
-    \begin{acronym}[all]
-        \acro{dhbw}[DHBW]{Duale Hochschule Baden-Württemberg}
-        \acro{rest}[REST]{REstful State Transfer}
-        \acro{api}[API]{Application Programming Interface}
-    \end{acronym}
     \onehalfspacing
+    \pagenumbering{arabic}
 
     \chapter{Projektbeschreibung}\label{ch:projektbeschreibung}
-    Der Bierwart, im Rahmen dieser Abgabe, ist eine reine \ac{rest}-\ac{api}. \\ \\
-    \textbf{Das für die Abgabe relevante Repository befindet sich unter:} \\ \url{https://github.com/HerrLevin/Bierwart}\\ \\
-    Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}.
-    Die \ac{api} ist mit Swagger dokumentiert und befindet sich unter \url{http://localhost:8000/swagger/}\footnote{nur nach erfolgreicher Einrichtung beschrieben in \ref{sec:einrichtung} möglich.}.
+    Der Bierwart, im Rahmen dieser Abgabe, ist eine reine REST-API.
+    Es besteht ein separat ausführbares Frontend unter \url{https://github.com/HerrLevin/Bierwart-frontend}. \\
+    \textbf{Das für die Abgabe relevante Repository befindet sich unter:} \\ \url{https://github.com/HerrLevin/Bierwart}\\
+    \\
+    Eine erste alpha-Version ist unter \url{https://www.bierw.art/} aufrufbar.\\
+    Die API ist mit Swagger dokumentiert und befindet sich unter \url{www.bierw.art/swagger/} bzw. \url{http://localhost:8000/swagger/}\footnote{nur nach erfolgreicher Einrichtung beschrieben in \ref{sec:einrichtung} möglich.}.
     Hier lassen sich mit Betätigung des Buttons \textit{Try it out} einzelne Requests ohne Zusatzprogramme ausführen.
 
 
@@ -137,6 +131,12 @@
     Unsere Schnittstelle nach außen ist eine REST API.
     Auf diese weise können wir in Zukunft immer den neusten Scheiß als UI nutzen.
     In der äußersten Schicht findet sich die Anbindung an unsere SqLite Datenbank, denn die Welt der Datenbanken ist teilweise sehr rau und wechselhaft.
+
+    \begin{figure}[h!]
+        \includegraphics[width=\linewidth]{Bierwart.drawio.png}
+        \caption{Klassendiagramm für die Entwicklung der Clean Architecture}
+        \label{fig:klassendiagramm}
+    \end{figure}
 
     \section{Refactoring}\label{sec:refactoring}
 
@@ -201,6 +201,9 @@ try {
     Im Ordner \verb|tests| bzw. \verb|tests/Unit| befinden sich alle unsere derzeitigen (Unit-)Tests.
     Es existieren \textbf{37} Tests mit \textbf{88} Assertions.
     Die Coverage beläuft sich laut PHPUnit auf \textbf{63 \% File Coverage} und \textbf{32 \% Line Coverage}.
+    Diese ergibt sich dadurch, dass wir lediglich die integralen Bestandteile des Bierwarts testen.
+    Eine genauere Aufschlüsselung findet sich unter \ref{subsec:thorough}.
+    Wir verzichten explizit auf eine Testung der Business-Logik, da diese zum großen Teil von der Datenbank abhängig ist und somit nicht getestet werden kann.
 
     \subsection{Einsatz von Mocks}
     Da gewisse von uns eingesetzte Methoden im Normalfall den aktuellen PHP-Prozess beenden (siehe \ref{subsec:router}), lassen sich diese nicht im Ausgangszustand testen.
@@ -233,9 +236,11 @@ try {
 
     \subsubsection{Automatic}
     Sobald in PHPStorm \textit{Run All Tests} angeklickt wurde, laufen alle Tests vollautomatisch durch und berichten am Ende entweder \textbf{OK!} oder \textbf{FAILURES!} zurück.
+    Dies geschieht über assertions, die in PHPUnit vorhanden sind.
+    Zusätzlich zu den PHPUnit-Assertions, nutzen wir \verb|ExpectException|, um Fehlermeldungen zu testen.
     Ebenfalls lässt sich dies über den Konsolenbefehl \verb| vendor/bin/phpunit ./tests| im Hauptverzeichnis des Projekts ausführen.
 
-    \subsubsection{Thorough}
+    \subsubsection{Thorough}\label{subsec:thorough}
     Unsere wichtigsten Funktionalitäten testen wir in den Klassen \verb|Request|, \verb|Response| und \verb|Router|, da diese für die grundlegenden Funktionalitäten eines Seitenaufrufs zuständig sind.
     Alle Klassen besitzen 100 \% Coverage in diversen Erfolgs- und Fehlerszenarien. Lediglich \verb|Request| besitzt nur 96 \% line coverage, da hier auf eine Systemressource zugegriffen wird.
     Diese Systemressource lässt sich nur durch einen User-Input aufrufen, was gegen das A in ATRIP verstößst.
@@ -245,12 +250,12 @@ try {
     Dadurch sind sie im Fall eines funktinsfähigen Codes jederzeit auf egal welchem System mit demselben Ergebnis durchführbar.
 
     \subsubsection{Independent}
-    Unsere Tests bauen nicht aufeinander auf.
+    Wir haben unsere Tests so konzipiert, dass sie nicht aufeinander aufbauen.
     Falls ein Programmablauf getestet werden soll, passiert dies nur innerhalb einer einzigen Testmethode.
     Somit können sie jederzeit in beliebiger Zusammenstellung und Reihenfolge funktionsfähig sein.
 
     \subsubsection{Professional}
-    Unsere Testmethodennamen sind selbsterklärend; Bsp: \verb|RequestTest()->testMissingBodyParams|.
+    Unsere Testmethodennamen sind selbsterklärend gewählt; Bsp: \verb|RequestTest()->testMissingBodyParams|.
     Dadurch wird die Absicht des Tests direkt klar und ist leichter verständlich.
     Unsere Tests sind so kurz wie möglich gehalten, was die Verständlichkeit auch erhöht.
 
@@ -262,11 +267,23 @@ try {
     Als Beispiel für die Umsetzung der SOLID Prinzipien wird unser \verb|Validator| verwendet. Er dient zur Validierung von JSON-Inputs.
     
     \subsubsection{Single responsibility principle}
-    Unser Validator hat für jede Regel, nach welcher validiert werden kann, eine eigene Klasse. Ändert sich die Validierung einer Regel, muss lediglich diese eine klasse angepasst werden. Das Prinzip der \textit{single responsibility} ist damit erfüllt.
+    Unser Validator hat für jede Regel, nach welcher validiert werden kann, eine eigene Klasse.
+    Ändert sich die Validierung einer Regel, muss lediglich diese eine Klasse angepasst werden.
+    Das Prinzip der \textit{single responsibility} ist damit erfüllt.
+    \\
+    Negatives Beispiel: Die \verb|Helpers|-Klasse hat mehrere Verantwortlichkeiten, da sie Helfermethoden für sowohl Entwicklung als auch Produktivbetrieb bereitstellt.
+
     \subsubsection{Open/Closed principle}
-    Das Regelset des \verb|Validators| kann leicht erweitert werden. Dazu muss lediglich eine Klasse erzeugt werden, welche das \verb|Validaton| Interface implementiert und im \verb|registeredRuleset| der \verb|Validatable| Klasse eingetragen werden. Der \verb|Validator| selbst muss bei einer geänderten Anforderung nicht geändert werden.
+    Das Regelset des \verb|Validators| kann leicht erweitert werden.
+    Dazu muss lediglich eine Klasse erzeugt werden, welche das \verb|Validaton| Interface implementiert und im \verb|registeredRuleset| der \verb|Validatable| Klasse eingetragen werden.
+    Der \verb|Validator| selbst muss bei einer geänderten Anforderung nicht geändert werden.
+    \\
+    Weiteres Beispiel: \verb|Router| -- Dieser lässt sich alleinig über einen weiteren Methodenaufruf in seiner Funktionalität erweitern.
+    Ebenfalls lässt er sich problemlos um die verbleibenden HTTP-Methoden (\verb|PUT|, \verb|DELETE|,...) erweitern.
+
     \subsubsection{Liskov substitution principle}
-    Das LSP ist erfüllt, da der Aufruf der Generalisierung durch jede Spezialisierung ersetzen kann. Zum Beispiel in der \verb|Validatable| Klasse:
+    Das LSP ist erfüllt, da der Aufruf der Generalisierung durch jede Spezialisierung ersetzt werden kann.
+    Zum Beispiel in der \verb|Validatable| Klasse (Siehe Listing \ref{lst:lsp}).
     \begin{lstlisting}[language=php,label={lst:lsp},escapechar=\%,caption={Beispiel Liskov substitution principle}]
 foreach ($this->ruleset as $rule) {
     $classname = $this->getRule($rule);
@@ -274,10 +291,31 @@ foreach ($this->ruleset as $rule) {
     $class->validate($this->key, $this->value);
 }\end{lstlisting}
 	Ersetzt man den Polymorphismus, welcher die gesuchte Validierung sucht, durch irgendeine bestimmte Regel, erhält man immer eine gültige Antwort.
+    \\
+    Hierfür können wir keine weiteren Beispiele auflisten, da wir in unserem Code lediglich PHP-eigene Exceptions erweitern und sonst keine Spezialisierungen durchführen.
+
     \subsubsection{Interface segregation principle}
-    Das \verb|Validator| Interface ist spezifisch für die Validierung eines key:value Arrays (wie bei JSON) zugeschnitten. Es benötigt keine weiteren Informationen und unterstützt auch keine anderen Funktionen. Die Validierung ist für die Überprüfung eines JSON Inputs damit passgenau zugeschnitten. 
+    Das \verb|Validator| Interface ist spezifisch für die Validierung eines key:value Arrays (wie bei JSON) zugeschnitten.
+    Es benötigt keine weiteren Informationen und unterstützt auch keine anderen Funktionen.
+    Die Validierung ist für die Überprüfung eines JSON Inputs damit passgenau zugeschnitten.
+
+
+
     \subsubsection{Dependency inversion principle}
-    Spezifische Regeln sind von der Abstraktion, dem Interface \verb|Validation|, abhängig. Bei Änderungen im niedrigen Modul ist keine Änderung im höheren Modul nötig. Eine Flexible Erweiterung ist damit gegeben.
+    Spezifische Regeln sind von der Abstraktion, dem Interface \verb|Validation|, abhängig.
+    Bei Änderungen im niedrigen Modul ist keine Änderung im höheren Modul nötig.
+    Eine Flexible Erweiterung ist damit gegeben.\\
+    \\
+    Wie bereits in Diagram \ref{fig:klassendiagramm} zu sehen, ist der Query-Builder ein weiteres Beispiel hierfür.
+    Wird die Datenbank geändert (derzeit SQLite), muss lediglich die Implementierung in \verb|DB| abgeändert werden (Siehe Abb. \ref{fig:figure}).
+    Die hierauf zugreifenden Klassen bleiben unverändert.
+
+    \clearpage
+    \begin{figure}[!th]
+        \includegraphics[width=0.8\paperheight,angle=90]{DIP.png}
+        \caption{Dependency Inversion Principle anhand queryBuilder \& DB}\label{fig:figure}
+    \end{figure}
+
     \subsection{GRASP}
     \label{subsec:grasp}
 
@@ -287,6 +325,8 @@ foreach ($this->ruleset as $rule) {
     Im Falle eines POST/GET-Aufrufs wird innerhalb zunächst die Methode \verb|scaffoldRequest()| aufgerufen, diese ruft \verb|matchURI(...)| auf, welche im Fehlerfall noch zusätzlich \verb|abort(...)| aufruft.
     Hierbei wurden ebenfalls alle private/protected Klassenvariablen aufgerufen.
     Somit können in einem einzelnen Aufruf fast alle Methoden innerhalb der Klasse aufgerufen werden.
+    Negativbeispiele hierfür sind zum einen die \verb|Helpers|-Klasse, da sie mehrere statische, eigenständige Hilfsmethoden enthält.
+    Zum anderen unsere Controller-Klassen, da hier die einzelnen UseCases voneinander getrennt sind.
 
     \subsubsection{Low Coupling}
     Die Kopplung ist ein Maß für die Abhängigkeit einer Klasse von ihrer Umgebung.
@@ -295,6 +335,8 @@ foreach ($this->ruleset as $rule) {
     Zwar besitzt sie einige Abhängigkeiten nach Außen durch \verb|Helpers::dd()|, diese ist aber lediglich ein Wrapper um die PHP-eigene `exit()`-Methode, um eine bessere Testbarkeit zu erreichen. (Siehe \ref{sec:refactoring})
     Ein weiterer Gesichtspunkt der Kopplung wäre der dynamische Methodenaufruf durch einen Übergabeparameter von außen.
     Dies sehen wir nicht als tatsächliche Abhängigkeit, da es einem return-Wert gleicht und keine statische Abhängigkeit innerhalb der Klasse darstellt.
+    Klassen, welche eine hohe Kopplung aufweisen, sind ebenfalls unsere Controller-Klassen, welche die Core-Interfaces implementieren.
+
     
     \subsection{DRY -- Don't Repeat Yourself}
     \label{subsec:dry}

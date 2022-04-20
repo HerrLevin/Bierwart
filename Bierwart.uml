@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>/home/herrlevin_/PhpstormProjects/Bierwart</OriginalElement>
+  <nodes>
+    <node x="0.0" y="425.0">\App\Adapters\Validator\Validatable</node>
+    <node x="605.0" y="689.0">\App\Adapters\Validator\RuleNullable</node>
+    <node x="778.0" y="0.0">\App\Adapters\Router</node>
+    <node x="785.0" y="928.0">\App\Adapters\Response</node>
+    <node x="590.0" y="767.0">\App\Core\ReportsControllerInterface</node>
+    <node x="361.0" y="269.0">\App\Exceptions\ValidationException</node>
+    <node x="594.0" y="0.0">\App\Adapters\Database\QueryBuilder</node>
+    <node x="0.0" y="1089.0">\App\Config</node>
+    <node x="35.0" y="850.0">\App\Adapters\Controllers\BeverageController</node>
+    <node x="154.0" y="689.0">\App\Adapters\Validator\RuleMail</node>
+    <node x="275.0" y="689.0">\App\Adapters\Validator\RuleInteger</node>
+    <node x="264.0" y="928.0">\App\Core\BierwartInterface</node>
+    <node x="242.0" y="1089.0">\App\Adapters\Database\DB</node>
+    <node x="299.0" y="1011.0">\App\Adapters\Controllers\Bierwart</node>
+    <node x="635.0" y="928.0">\App\Adapters\Validator\Validator</node>
+    <node x="131.0" y="1089.0">\App\App</node>
+    <node x="335.0" y="850.0">\App\Adapters\Controllers\AccountController</node>
+    <node x="447.0" y="606.0">\App\Adapters\Validator\Validation</node>
+    <node x="207.0" y="308.0">\App\Exceptions\DBException</node>
+    <node x="0.0" y="767.0">\App\Core\BeverageControllerInterface</node>
+    <node x="940.0" y="928.0">\App\Adapters\Helpers</node>
+    <node x="300.0" y="767.0">\App\Core\AccountControllerInterface</node>
+    <node x="0.0" y="308.0">\App\Exceptions\NotFoundException</node>
+    <node x="35.0" y="1011.0">\App\Adapters\Controllers\UserController</node>
+    <node x="914.0" y="689.0">\App\Adapters\Validator\RuleBoolean</node>
+    <node x="756.0" y="689.0">\App\Adapters\Validator\RuleRequired</node>
+    <node x="218.5" y="83.0">\Exception</node>
+    <node x="625.0" y="850.0">\App\Adapters\Controllers\ReportsController</node>
+    <node x="421.0" y="689.0">\App\Adapters\Validator\RuleNotNegative</node>
+    <node x="215.5" y="0.0">\Throwable</node>
+    <node x="593.0" y="83.0">\App\Plugins\Database\SqLite</node>
+    <node x="0.0" y="689.0">\App\Adapters\Validator\RuleNumeric</node>
+    <node x="481.0" y="928.0">\App\Adapters\Request</node>
+    <node x="0.0" y="928.0">\App\Core\UserControllerInterface</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\App\Exceptions\ValidationException" target="\Exception" relationship="GENERALIZATION">
+      <point x="0.0" y="-55.5" />
+      <point x="454.5" y="244.0" />
+      <point x="274.0" y="244.0" />
+      <point x="0.0" y="68.0" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleMail" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="204.5" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Controllers\AccountController" target="\App\Core\AccountControllerInterface" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleRequired" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="825.0" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Exceptions\NotFoundException" target="\Exception" relationship="GENERALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="93.5" y="244.0" />
+      <point x="274.0" y="244.0" />
+      <point x="0.0" y="68.0" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleNumeric" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="67.0" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleInteger" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="338.0" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Plugins\Database\SqLite" target="\App\Adapters\Database\QueryBuilder" relationship="REALIZATION">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Controllers\BeverageController" target="\App\Core\BeverageControllerInterface" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Controllers\UserController" target="\App\Core\UserControllerInterface" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Controllers\ReportsController" target="\App\Core\ReportsControllerInterface" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleNotNegative" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Exceptions\DBException" target="\Exception" relationship="GENERALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="68.0" />
+    </edge>
+    <edge source="\App\Adapters\Controllers\Bierwart" target="\App\Core\BierwartInterface" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\Exception" target="\Throwable" relationship="REALIZATION">
+      <point x="0.0" y="-68.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleBoolean" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="980.0" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="\App\Adapters\Validator\RuleNullable" target="\App\Adapters\Validator\Validation" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="670.5" y="664.0" />
+      <point x="503.0" y="664.0" />
+      <point x="0.0" y="16.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7802101576182137" showDependencies="false" x="523.0" y="561.0" />
+  <SelectedNodes>
+    <node>\App\Adapters\Validator\Validatable</node>
+    <node>\App\Adapters\Validator\RuleNullable</node>
+    <node>\App\Adapters\Router</node>
+    <node>\App\Adapters\Response</node>
+    <node>\App\Core\ReportsControllerInterface</node>
+    <node>\App\Exceptions\ValidationException</node>
+    <node>\App\Adapters\Database\QueryBuilder</node>
+    <node>\App\Config</node>
+    <node>\App\Adapters\Controllers\BeverageController</node>
+    <node>\App\Adapters\Validator\RuleMail</node>
+    <node>\App\Adapters\Validator\RuleInteger</node>
+    <node>\App\Core\BierwartInterface</node>
+    <node>\App\Adapters\Database\DB</node>
+    <node>\App\Adapters\Controllers\Bierwart</node>
+    <node>\App\Adapters\Validator\Validator</node>
+    <node>\App\App</node>
+    <node>\App\Adapters\Controllers\AccountController</node>
+    <node>\App\Adapters\Validator\Validation</node>
+    <node>\App\Exceptions\DBException</node>
+    <node>\App\Core\BeverageControllerInterface</node>
+    <node>\App\Adapters\Helpers</node>
+    <node>\App\Core\AccountControllerInterface</node>
+    <node>\App\Exceptions\NotFoundException</node>
+    <node>\App\Adapters\Controllers\UserController</node>
+    <node>\App\Adapters\Validator\RuleBoolean</node>
+    <node>\App\Adapters\Validator\RuleRequired</node>
+    <node>\Exception</node>
+    <node>\App\Adapters\Controllers\ReportsController</node>
+    <node>\App\Adapters\Validator\RuleNotNegative</node>
+    <node>\Throwable</node>
+    <node>\App\Plugins\Database\SqLite</node>
+    <node>\App\Adapters\Validator\RuleNumeric</node>
+    <node>\App\Adapters\Request</node>
+    <node>\App\Core\UserControllerInterface</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
