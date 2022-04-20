@@ -7,17 +7,19 @@ use App\Plugins\Database\SqLite;
 
 class DB
 {
+    private static QueryBuilder $queryBuilder;
+
     public static function table(string $name): SqLite
     {
-        $sqlite = new SqLite();
-        $sqlite->table(name: $name);
-        return $sqlite;
+        self::$queryBuilder = new SqLite();
+        self::$queryBuilder->table(name: $name);
+        return self::$queryBuilder;
     }
 
     public static function beginTransaction(): SqLite
     {
-        $sqlite = new SqLite();
-        $sqlite->beginTransaction();
-        return $sqlite;
+        self::$queryBuilder = new SqLite();
+        self::$queryBuilder->beginTransaction();
+        return self::$queryBuilder;
     }
 }

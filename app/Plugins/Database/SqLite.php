@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Plugins\Database;
 
@@ -9,9 +9,6 @@ use PDO;
 use PDOException;
 use PDOStatement;
 
-/**
- * @todo replace strtr with $this->pdo->prepare
- */
 class SqLite implements QueryBuilder
 {
 
